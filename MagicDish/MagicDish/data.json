@@ -1,0 +1,71 @@
+{
+  "Recipes": [
+    {
+      "Name": "Milk with Cereal",
+      "RequiredProducts": [
+        {
+          "Name": "Milk",
+          "UnitOfMeasure": 2,
+          "Quantity": 250
+        },
+        {
+          "Name": "Cereal",
+          "UnitOfMeasure": 1,
+          "Quantity": 80
+        }
+      ],
+      "CookingTimeInMinutes": 2,
+      "IsVegeterian": false
+    }
+  ],
+  "Users": [
+    {
+      "Name": "John",
+      "Surname": "Doe",
+      "Email": "test-user@magicdish.com",
+      "UserId": 1,
+      "Username": "test-user",
+      "Fridge": {
+        "Id": 1,
+        "Name": "John Doe's Test Fridge",
+        "Products": [
+          {
+            "Name": "Milk",
+            "UnitOfMeasure": 2,
+            "Quantity": 1000
+          },
+          {
+            "Name": "Cereal",
+            "UnitOfMeasure": 1,
+            "Quantity": 300
+          },
+          {
+            "Name": "Carrot",
+            "UnitOfMeasure": 0,
+            "Quantity": 3
+          },
+          {
+            "Name": "Potatoes",
+            "UnitOfMeasure": 1,
+            "Quantity": 1200
+          },
+          {
+            "Name": "Rice",
+            "UnitOfMeasure": 1,
+            "Quantity": 500
+          },
+          {
+            "Name": "Chicken",
+            "UnitOfMeasure": 1,
+            "Quantity": 350
+          },
+          {
+            "Name": "Onions",
+            "UnitOfMeasure": 0,
+            "Quantity": 5
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -11,13 +11,16 @@ namespace BusinessLogic
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
-        public uint UserId { get; set; }
+        public int UserId { get; set; }
         public string Username { get; set; }
+        public Fridge Fridge { get; set; }
 
+        public UserAccount()
+        {
 
-        private List<UserAccount> users = new List<UserAccount>();
+        }
 
-        public UserAccount(string name, string surname, string email, uint UserID, string username)
+        public UserAccount(string name, string surname, string email, int UserID, string username)
         {
             Name = name;
             Surname = surname;
@@ -25,11 +28,5 @@ namespace BusinessLogic
             UserId = UserID;
             Username = username;
         }
-
-        public void AddUser()
-        {
-           
-
     }
-    
 }

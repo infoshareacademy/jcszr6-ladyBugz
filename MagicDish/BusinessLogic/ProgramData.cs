@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace BusinessLogic
 {
-    public class ProductClass
+    public class ProgramData
     {
+        public List<CookingRecipe> Recipes { get; set; }
+        public List<UserAccount> Users { get; set; }
+
     }
 }
