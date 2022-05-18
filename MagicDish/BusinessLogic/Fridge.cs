@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace BusinessLogic
 {
     public class Fridge
-    {
+    { 
+        // czy lodowka powinna miec wlasciciela UserAccount?
         public int Id { get; set; }
 
         public string Name { get; set; }
