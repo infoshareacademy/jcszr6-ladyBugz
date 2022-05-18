@@ -14,27 +14,24 @@ namespace MagicDish
     {
         public static void Main(string[] args)
 
-        { 
-            
-            UserAccount userAccount = new UserAccount(); 
+        {
+
             string jsonName, jsonFileName;
+            //get a path to the desktop for current user (Environment.GetFolderPath(Environment.SpecialFolder.Desktop))
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string[] answers = {"yes", "Yes", "y", "Y", "no", "No", "n", "N" };
-            Console.WriteLine($"Hello user {userAccount.Name}");
-            Console.WriteLine("Do you want to add any products to your Fridge from a file? yes/no");
+            string[] answers = { "yes", "Yes", "y", "Y", "no", "No", "n", "N" };
+            Console.WriteLine("Do you want to add any Recipes to your database from external file? yes/no");
             string userInput = Console.ReadLine();
-            
 
             while (!answers.Contains(userInput))
             {
                 IncorrectInput();
-                userInput = Console.ReadLine();   
+                userInput = Console.ReadLine();
             }
             if (userInput == "yes" || userInput == "y" || userInput == "Yes" || userInput == "Y")
             {
                 Console.Clear();
                 Console.WriteLine("You have to paste the input file to your desktop. \n\nDo you want to open your desktop folder so you can paste the file there?");
-                
                 var answer = Console.ReadLine();
 
                 while (!answers.Contains(answer))
@@ -63,7 +60,7 @@ namespace MagicDish
                     Console.WriteLine("You have entered incorrect name of the file or the file doesn't exist on your desktop.");
                     Console.BackgroundColor = ConsoleColor.Black;
                     Console.WriteLine();
-                    Console.WriteLine("Check is your file in desktop folder. Once done press any key");
+                    Console.WriteLine("Check is your file in the desktop folder. Once done press any key");
                     Thread.Sleep(2000);
                     Process.Start("explorer.exe", desktopPath);
                     Console.ReadKey();
@@ -72,39 +69,15 @@ namespace MagicDish
                     jsonName = Console.ReadLine();
                     jsonFileName = jsonName + ".json";
                 }
-                //get a path to the desktop for current user (Environment.GetFolderPath(Environment.SpecialFolder.Desktop))
-                try
-                {
-                    
-                    var fileContents = File.ReadAllText(Path.Combine(desktopPath, jsonFileName));
-                    var data = JsonConvert.DeserializeObject<ProgramData>(fileContents);
-                    ProgramData programData = new ProgramData();
-                    programData.Users = data.Users;
-                    
 
-                    //foreach (var user in data.Users)
-                    //{
-                    //    Users.Add(user);
-                    //}
-                    
-                    
-                    //var programData = new ProgramData();
-                    //programData.Recipes = new List<CookingRecipe>();  
-                    Console.ReadKey();
-                }
-                catch (FileNotFoundException)
-                {
-                    Console.BackgroundColor = ConsoleColor.Red;
-                    Console.WriteLine("You have entered incorrect name of the file or the file doesn't exist on your desktop.");
-                    Console.BackgroundColor = ConsoleColor.Black;
-                    Console.WriteLine();
-                }
+                var fileContents = File.ReadAllText(Path.Combine(desktopPath, jsonFileName));
+                ProgramData data = JsonConvert.DeserializeObject<ProgramData>(fileContents);
             }
             else
-            { 
+            {
                 Console.WriteLine();
-            }  
             }
+        }
 
 
         static void IncorrectInput()
@@ -113,11 +86,6 @@ namespace MagicDish
             Console.WriteLine("Invalid input, please try again");
             Console.BackgroundColor = ConsoleColor.Black;
         }
-        
-       
-
-        }
-        }
-
-    
+    }
+}
 
