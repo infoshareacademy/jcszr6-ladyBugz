@@ -8,11 +8,23 @@ namespace BusinessLogic
 {
     public class Fridge
     { 
-        // czy lodowka powinna miec wlasciciela UserAccount?
-        public int Id { get; set; }
 
+        // czy trzeba rozroznic product z lodowki od productu z recipe
         public string Name { get; set; }
-
         public List<Product> Products { get; set; }
+
+        public Fridge()
+        {
+        }
+
+        public Fridge(string name)
+        {
+            Name = name;
+        }
+
+        public void AddProductToFridge(Product product)
+        {
+            Products.Add(product);
+        }
     }
 }
