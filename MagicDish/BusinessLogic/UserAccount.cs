@@ -10,8 +10,8 @@ namespace BusinessLogic
     {
         //private int _userId; - how to set this one?
 
-        public String Name{ get; set; }
-        public String Email{ get; set; }
+        public String Name { get; set; }
+        public String Email { get; set; }
         public String Username { get; set; }
        
 

@@ -11,7 +11,7 @@ namespace BusinessLogic
 
         // czy trzeba rozroznic product z lodowki od productu z recipe
         public string Name { get; set; }
-        public List<Product> Products { get; set; }
+        public List<ProductQuantity> Products { get; set; }
 
         public FoodRepository()
         {
@@ -22,9 +22,10 @@ namespace BusinessLogic
             Name = name;
         }
 
-        public void AddProductToFoodRepository(Product product)
+        public void AddProductToFoodRepository(Product product, int unit)
         {
-            Products.Add(product);
+            var newProduct = new ProductQuantity(product, unit);
+            Products.Add(newProduct);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace MagicDish
     {
         public static void Main(string[] args)
         {
-            WelcomeMenu();
+            Menu.WelcomeMenu();
         }
     }
 }
