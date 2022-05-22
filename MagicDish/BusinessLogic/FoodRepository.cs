@@ -6,23 +6,23 @@ using System.Threading.Tasks;
 
 namespace BusinessLogic
 {
-    public class Fridge
+    public class FoodRepository
     { 
 
         // czy trzeba rozroznic product z lodowki od productu z recipe
         public string Name { get; set; }
         public List<Product> Products { get; set; }
 
-        public Fridge()
+        public FoodRepository()
         {
         }
 
-        public Fridge(string name)
+        public FoodRepository(string name)
         {
             Name = name;
         }
 
-        public void AddProductToFridge(Product product)
+        public void AddProductToFoodRepository(Product product)
         {
             Products.Add(product);
         }

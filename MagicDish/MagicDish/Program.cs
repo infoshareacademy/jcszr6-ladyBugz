@@ -58,10 +58,10 @@ namespace MagicDish
                 Email = "test-user@magicdish.com",
                 Name = "John",
                 Surname = "Doe",
-                Fridge = new Fridge
+                FoodRepository = new FoodRepository
                 {
                     Id = 1,
-                    Name = "John Doe's Test Fridge",
+                    Name = "John Doe's Test FoodRepository",
                     Products = products
                 }
             };

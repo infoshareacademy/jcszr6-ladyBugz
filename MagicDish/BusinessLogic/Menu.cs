@@ -46,12 +46,12 @@ namespace BusinessLogic
             Console.WriteLine($"Nice to meet you {user.Name}");
             Console.WriteLine("Let's create your first food-repository");
             Console.WriteLine("How would you like to name your food-repository?");
-            user.Fridge = new Fridge(CollectNameInput());
-            Console.WriteLine($"Now, add first product to your {user.Fridge}");
-            FridgeMenu(user.Fridge);
+            user.FoodRepository = new FoodRepository(CollectNameInput());
+            Console.WriteLine($"Now, add first product to your {user.FoodRepository}");
+            FoodRepositoryMenu(user.FoodRepository);
         }
 
-        private static void FridgeMenu(Fridge fridge)
+        private static void FoodRepositoryMenu(FoodRepository foodRepository)
         {
             // tutaj bedziemy drukowac opcje z wczytanego pliku, ale na razie z listy
             List<Product> products = new List<Product>();
@@ -74,7 +74,7 @@ namespace BusinessLogic
             int option = CollectInputAsValidOption(products.Count);
             Console.WriteLine($"How much/many of the {products[option - 1].Name} would you like to add to the repo? [{products[option - 1].UnitOfMeasure.ToString()}]");
             int unit = CollectUnitInput();
-            fridge.AddProductToFridge(products[option - 1]);
+            foodRepository.AddProductToFoodRepository(products[option - 1]);
 
             //okejka tutaj juz grubo polecialam. czy wybrany z listy dostepnych produktow produkt dodaje do lodowki, czy nowy produkt o tych samych wlasciwosciach?
             

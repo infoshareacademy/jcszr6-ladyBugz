@@ -15,7 +15,7 @@ namespace BusinessLogic
         public String Username { get; set; }
        
 
-        public Fridge Fridge { get; set; } 
+        public FoodRepository FoodRepository { get; set; } 
 
         public UserAccount()
         {
