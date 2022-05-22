@@ -54,13 +54,15 @@ namespace BusinessLogic
         {
             // tutaj bedziemy drukowac opcje z wczytanego pliku, ale na razie z listy
 
+            // product id 
+
             Console.WriteLine("Select product to add from the list:");
 
             var products = ProductService.GetProducts();
 
             for (int i = 0; i < products.Count(); i++)
             {
-                Console.WriteLine($"{i+1} - {products[i]}");
+                Console.WriteLine($"{i+1} - {products[i].Name}");
             }
 
             int option = CollectInputAsValidOption(products.Count);
@@ -68,8 +70,7 @@ namespace BusinessLogic
             int quantity = CollectUnitInput();
             foodRepository.AddProductToFoodRepository(products[option - 1], quantity);
 
-            //okejka tutaj juz grubo polecialam. czy wybrany z listy dostepnych produktow produkt dodaje do lodowki, czy nowy produkt o tych samych wlasciwosciach?
-            
+            // product.findAny... takaa to walidacja 
 
         }
 
