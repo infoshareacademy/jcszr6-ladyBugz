@@ -20,8 +20,9 @@ namespace BusinessLogic
             Products.Add(newProduct);
         }
 
-
-
-
+        public List<ProductQuantity> GetProducts()
+        {
+            return Products;
+        }
     }
 }

@@ -4,10 +4,10 @@
     {
         private static List<Product> Products = new List<Product>
             {
-                new Product(1, "milk", UnitOfMeasure.Mililiters),
-                new Product(2, "wheat", UnitOfMeasure.Grams),
-                new Product(3, "egg", UnitOfMeasure.Pieces),
-                new Product(4, "sugar", UnitOfMeasure.Grams)
+                new Product(1, "milk", UnitOfMeasure.mililiters),
+                new Product(2, "wheat", UnitOfMeasure.grams),
+                new Product(3, "egg", UnitOfMeasure.pieces),
+                new Product(4, "sugar", UnitOfMeasure.grams)
             };
 
         //tutaj bedzie pobieranie z pliku tekstowego

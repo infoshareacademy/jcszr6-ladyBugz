@@ -39,11 +39,54 @@
             Console.WriteLine("Let's create your first food-repository");
             Console.WriteLine("How would you like to name your food-repository?");
             user.FoodRepository = new FoodRepository(CollectStringInput("fridge"));
-            Console.WriteLine($"Now, add first product to your {user.FoodRepository}");
+            Console.WriteLine($"Now, add first product to your {user.FoodRepository.Name}");
+            string wantToAddanotherProduct;
+            do
+            {
+                AvailableProductsMenu(user.FoodRepository);
+                Console.WriteLine("Would you like to add another product?");
+                wantToAddanotherProduct = CollectYesOrNoInput();
+
+            }
+            while (wantToAddanotherProduct == "yes");
             FoodRepositoryMenu(user.FoodRepository);
         }
 
         private static void FoodRepositoryMenu(FoodRepository foodRepository)
+        {
+            Console.WriteLine($"You're in {foodRepository.Name}");
+            Console.WriteLine("Products available:");
+            foreach(var product in foodRepository.Products)
+            {
+                Console.WriteLine($"{product.Product.Id} - {product.Quantity} [{product.Product.UnitOfMeasure}] of {product.Product.Name}");
+            }
+        }
+
+        private static string CollectYesOrNoInput()
+        {
+            bool valid;
+            string value = "";
+
+            do
+            {
+                string? input = Console.ReadLine();
+                if (input == "yes" || input == "no")
+                {
+                    value = input;
+                    valid = true;
+                }
+                else
+                {
+                    valid = false;
+                    Console.WriteLine("Invalid input, try again ('yes' for yes, 'no' for no)");
+                }
+            }
+            while (!valid);
+
+            return value;
+        }
+
+        private static void AvailableProductsMenu(FoodRepository foodRepository)
         {
             // tutaj bedziemy drukowac opcje z wczytanego pliku, ale na razie z listy
 
@@ -58,9 +101,10 @@
 
 
             Product selectedProductOption = CollectProductById(products);
-            Console.WriteLine($"How much/many of the {selectedProductOption.Name} would you like to add to the repo? [{selectedProductOption.UnitOfMeasure}]");
+            Console.WriteLine($"How much/many of {selectedProductOption.Name} would you like to add to the repo? [{selectedProductOption.UnitOfMeasure}]");
             int quantity = CollectUnitInput();
             foodRepository.AddProductToFoodRepository(selectedProductOption, quantity);
+            Console.WriteLine($"{selectedProductOption.Name} added to the food repository");
         }
 
         private static Product CollectProductById(List<Product> products)
