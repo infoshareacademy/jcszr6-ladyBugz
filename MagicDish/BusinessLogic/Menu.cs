@@ -66,7 +66,7 @@
         private static Product CollectProductById(List<Product> products)
         {
             bool valid;
-            Product product;
+            Product? product;
 
             do
             {
@@ -86,7 +86,7 @@
             }
             while (!valid);
 
-            return product;
+            return product!;
         }
     
 

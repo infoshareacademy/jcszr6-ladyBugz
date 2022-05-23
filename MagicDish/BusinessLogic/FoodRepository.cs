@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace BusinessLogic
 {
     public class FoodRepository
@@ -11,12 +7,6 @@ namespace BusinessLogic
 
         public string Name { get; set; }
         public List<ProductQuantity> Products { get; set; }
-
-        
-        public FoodRepository()
-        {
-            Products = new List<ProductQuantity>();
-        }
 
         public FoodRepository(string name)
         {
