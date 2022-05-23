@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BusinessLogic
+﻿namespace BusinessLogic
 {
     public class Menu
     {
@@ -25,7 +19,6 @@ namespace BusinessLogic
                     SignUpMenu();
                     break;       
             }
-
         }
 
         private static void SignInMenu()
@@ -54,25 +47,48 @@ namespace BusinessLogic
         {
             // tutaj bedziemy drukowac opcje z wczytanego pliku, ale na razie z listy
 
-            // product id 
-
             Console.WriteLine("Select product to add from the list:");
 
             var products = ProductService.GetProducts();
 
-            for (int i = 0; i < products.Count(); i++)
+            foreach (var product in products)
             {
-                Console.WriteLine($"{i+1} - {products[i].Name}");
+                Console.WriteLine($"{product.Id} - {product.Name}");
             }
 
-            int option = CollectInputAsValidOption(products.Count);
-            Console.WriteLine($"How much/many of the {products[option - 1].Name} would you like to add to the repo? [{products[option - 1].UnitOfMeasure.ToString()}]");
+
+            Product selectedProductOption = CollectProductById(products);
+            Console.WriteLine($"How much/many of the {selectedProductOption.Name} would you like to add to the repo? [{selectedProductOption.UnitOfMeasure}]");
             int quantity = CollectUnitInput();
-            foodRepository.AddProductToFoodRepository(products[option - 1], quantity);
-
-            // product.findAny... takaa to walidacja 
-
+            foodRepository.AddProductToFoodRepository(selectedProductOption, quantity);
         }
+
+        private static Product CollectProductById(List<Product> products)
+        {
+            bool valid;
+            Product product;
+
+            do
+            {
+                string? input = Console.ReadLine();
+                bool inputIsInt = Int32.TryParse(input, out int number);
+                product = products.FirstOrDefault(p => p.Id == number);
+
+                if (product != null)
+                {
+                    valid = true;
+                }
+                else
+                {
+                    valid = false;
+                    Console.WriteLine("Invalid input, try again");
+                }
+            }
+            while (!valid);
+
+            return product;
+        }
+    
 
         private static int CollectUnitInput()
         {
@@ -104,19 +120,11 @@ namespace BusinessLogic
             bool valid;
             int option = -1;
 
-            int[] possibleOptions = new int[numberOfPossibleOptions];
-            for (int i = 0; i < numberOfPossibleOptions; i++)
-            {
-                possibleOptions[i] = i+1;
-            }
-
-            // sprawdzic czy input mniejszy rowny od liczby mozliwych opcji
-
             do
             {
                 string? input = Console.ReadLine();
                 bool inputIsInt = Int32.TryParse(input, out int number);
-                bool inputIsContainedWithinPossibleOptions = possibleOptions.Contains(number);
+                bool inputIsContainedWithinPossibleOptions = number > 0 && number <= numberOfPossibleOptions;
 
                 if (inputIsInt && inputIsContainedWithinPossibleOptions)
                 {
@@ -137,7 +145,6 @@ namespace BusinessLogic
         private static string CollectStringInput(string name)
         {
 
-            //collect string input - przyjmij nazwe inputu jako parametr
             bool valid;
             string value = "";
 
@@ -169,12 +176,11 @@ namespace BusinessLogic
             do
             {
                 string? input = Console.ReadLine();
-                if (!string.IsNullOrEmpty(input))
+                if (!string.IsNullOrEmpty(input) && input.Contains('@'))
                 {
                     email = input;
                     valid = true;
                 }
-                //TO DO: sprawdz czy jest malpka 
                 else
                 {
                     valid = false;

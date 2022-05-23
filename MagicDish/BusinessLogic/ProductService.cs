@@ -10,10 +10,10 @@ namespace BusinessLogic
     {
         private static List<Product> Products = new List<Product>
             {
-                new Product("milk", UnitOfMeasure.Mililiters),
-                new Product("wheat", UnitOfMeasure.Grams),
-                new Product("egg", UnitOfMeasure.Pieces),
-                new Product("sugar", UnitOfMeasure.Grams)
+                new Product(1, "milk", UnitOfMeasure.Mililiters),
+                new Product(2, "wheat", UnitOfMeasure.Grams),
+                new Product(3, "egg", UnitOfMeasure.Pieces),
+                new Product(4, "sugar", UnitOfMeasure.Grams)
             };
 
         //tutaj bedzie pobieranie z pliku tekstowego

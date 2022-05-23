@@ -12,8 +12,9 @@ namespace BusinessLogic
         public string Name { get; set; }
         public UnitOfMeasure UnitOfMeasure { get; set; }
 
-        public Product(string name, UnitOfMeasure unitOfMeasure)
+        public Product(int id, string name, UnitOfMeasure unitOfMeasure)
         {
+            Id = id;
             Name = name;
             UnitOfMeasure = unitOfMeasure;
         }
