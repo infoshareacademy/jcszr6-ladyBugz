@@ -60,6 +60,13 @@
             {
                 Console.WriteLine($"{product.Product.Id} - {product.Quantity} [{product.Product.UnitOfMeasure}] of {product.Product.Name}");
             }
+            Console.WriteLine("What would you like to do from here?");
+            Console.WriteLine("1 - Add more products to {fridge}");
+            Console.WriteLine("2 - Edit available products");
+            Console.WriteLine("3 - Remove product from the repo");
+            Console.WriteLine("4 - Search for a recipe based on food you have in your repo");
+            Console.WriteLine("5 - See all the recipes");
+            Console.WriteLine("7 - Exit application");
         }
 
         private static string CollectYesOrNoInput()
