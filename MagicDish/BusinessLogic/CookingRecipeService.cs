@@ -1,10 +1,18 @@
-﻿namespace BusinessLogic
+﻿using Newtonsoft.Json;
+
+namespace BusinessLogic
 {
     public class CookingRecipeService
     {
-        public static List<CookingRecipe> Recipes = new List<CookingRecipe>
-        {
-            new CookingRecipe()};
+        public static List<CookingRecipe> Recipes {
+            get { return new List<CookingRecipe>(); }
+            set
+            {
+                var recipesContent = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "Recipes.json"));
+                CookingRecipeService.Recipes = JsonConvert.DeserializeObject<List<CookingRecipe>>(recipesContent);
+            } 
+        }
+
 
         public static List<CookingRecipe> GetCookingRecipes()
         {
