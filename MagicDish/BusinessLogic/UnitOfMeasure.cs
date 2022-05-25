@@ -1,5 +1,5 @@
 ﻿public enum UnitOfMeasure {
-    Pieces, // 0
-    Grams, // 1
-    Mililiters, // 2
+    pieces, // 0
+    grams, // 1
+    mililiters, // 2
 }
