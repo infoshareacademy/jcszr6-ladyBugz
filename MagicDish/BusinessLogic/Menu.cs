@@ -1,4 +1,6 @@
-﻿namespace BusinessLogic
+﻿using Newtonsoft.Json;
+
+namespace BusinessLogic
 {
     public class Menu
     {
@@ -10,14 +12,14 @@
             Console.WriteLine("1 - I'm a registered user");
             Console.WriteLine("2 - I'd like to register for the first time");
             int option = CollectInputAsValidOption(2);
-            switch(option)
+            switch (option)
             {
-                case 1: 
+                case 1:
                     SignInMenu();
                     break;
-                case 2: 
+                case 2:
                     SignUpMenu();
-                    break;       
+                    break;
             }
         }
 
@@ -56,17 +58,17 @@
         {
             Console.WriteLine($"You're in {foodRepository.Name}");
             Console.WriteLine("Products available:");
-            foreach(var product in foodRepository.Products)
+            foreach (var product in foodRepository.Products)
             {
                 Console.WriteLine($"{product.Product.Id} - {product.Quantity} [{product.Product.UnitOfMeasure}] of {product.Product.Name}");
             }
             Console.WriteLine("What would you like to do from here?");
-            Console.WriteLine("1 - Add more products to {fridge}");
+            Console.WriteLine($"1 - Add more products to {foodRepository.Name}");
             Console.WriteLine("2 - Edit available products");
             Console.WriteLine("3 - Remove product from the repo");
             Console.WriteLine("4 - Search for a recipe based on food you have in your repo");
             Console.WriteLine("5 - See all the recipes");
-            Console.WriteLine("7 - Exit application");
+            Console.WriteLine("6 - Exit application");
         }
 
         private static string CollectYesOrNoInput()
@@ -96,8 +98,11 @@
         private static void AvailableProductsMenu(FoodRepository foodRepository)
         {
             // tutaj bedziemy drukowac opcje z wczytanego pliku, ale na razie z listy
+            var productsContent = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "Products.json"));
+            ProductService.Products = JsonConvert.DeserializeObject<List<Product>>(productsContent);
 
             Console.WriteLine("Select product to add from the list:");
+            
 
             var products = ProductService.GetProducts();
 
@@ -139,7 +144,7 @@
 
             return product!;
         }
-    
+
 
         private static int CollectUnitInput()
         {
