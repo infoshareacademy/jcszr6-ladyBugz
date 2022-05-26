@@ -4,6 +4,8 @@ namespace BusinessLogic
 {
     public class Menu
     {
+        
+        
         public static void WelcomeMenu()
         {
 
@@ -24,34 +26,113 @@ namespace BusinessLogic
         }
 
         private static void SignInMenu()
+
         {
-            //TO DO: sign in menu az do strony twoja lodowka
+
+            UserAccount user = new UserAccount();
+            var usersList = new List<UserAccount>();
+            string usersDataPath = @"C:\Users\%username%\Desktop\Projekt grupowy\MagicDish\MagicDish\bin\Debug\net6.0\Users";
+            var fileContent = File.ReadAllText(Path.Combine(usersDataPath, "Users.json"));
+            usersList = JsonConvert.DeserializeObject<List<UserAccount>>(fileContent);
+            Console.WriteLine("Hello, please tell me your username");
+            user.Username = CollectStringInput("username");
+
+            var usernames = usersList.Select(u => u.Username);
+            while
+                (!usernames.Contains(user.Username))
+            {
+                Console.WriteLine("Invalid username. Please enter username again:");
+                user.Username = CollectStringInput("username");
+            }
+            Console.WriteLine("Hello, please tell me your password");
+            user.Password = CollectStringInput("password");
+
+
+
+            //napisac kod aby pobral password zalogowanego usera z loggedInUser
+            //var loggedInUser = usersList.Select(u => u).Where(u => u.Username == user.Username);   <<< to nie dziala
+            //var password = loggedInUser.Select(p => p.Password);   <<< to nie dziala
+            //var usersPassword = loggedInUser.Select(u => u.Password).ToList();      <<< to nie dziala
+
+            //var passwords = usersList.Select(u => u.Password);
+
+            
+            //while (!passwords.Contains(user.Password))
+            //{
+            //    Console.WriteLine("Invalid password. Please enter password again:");
+            //    user.Username = CollectStringInput("password");
+            //}
+
+            
+
+
+
+            
+
         }
 
         private static void SignUpMenu()
         {
             UserAccount user = new UserAccount();
-            Console.WriteLine("First things first. What is your name?");
-            user.Name = CollectStringInput("name");
-            Console.WriteLine("Now enter your user name");
-            user.Username = CollectStringInput("username");
-            Console.WriteLine("What is your email?");
-            user.Email = CollectEmailInput();
-            Console.WriteLine($"Nice to meet you {user.Name}");
-            Console.WriteLine("Let's create your first food-repository");
-            Console.WriteLine("How would you like to name your food-repository?");
-            user.FoodRepository = new FoodRepository(CollectStringInput("fridge"));
-            Console.WriteLine($"Now, add first product to your {user.FoodRepository.Name}");
-            string wantToAddanotherProduct;
-            do
-            {
-                AvailableProductsMenu(user.FoodRepository);
-                Console.WriteLine("Would you like to add another product?");
-                wantToAddanotherProduct = CollectYesOrNoInput();
+            var usersList = new List<UserAccount>();
+            string usersDataPath = Environment.CurrentDirectory + @"\Users";
 
+            
+            //napisac cos na pierwszy rozruch poniewaz przy 1szym starcie programu nie ma
+            //pliku "Users" jeszcze utworzonego i wali exception
+
+                var fileContent = File.ReadAllText(Path.Combine(usersDataPath, "Users.json"));
+                usersList = JsonConvert.DeserializeObject<List<UserAccount>>(fileContent);
+            
+
+            if
+                (usersList.Count() == 0)
+            {
+                user.Id = 0;
             }
-            while (wantToAddanotherProduct == "yes");
-            FoodRepositoryMenu(user.FoodRepository);
+            else
+            {
+                user.Id = usersList.Count();
+            }   
+                Console.WriteLine("First things first. What is your name?");
+                user.Name = CollectStringInput("name");
+                Console.WriteLine("Now enter your user name");
+                user.Username = CollectStringInput("username");
+                var usernames = usersList.Select(u => u.Username);
+                while (usernames.Contains(user.Username))
+                {
+                    Console.WriteLine("username already taken, please chose different username:");
+                    user.Username = CollectStringInput("username");
+                }
+                Console.WriteLine("Create a password");
+                user.Password = CollectStringInput("password");
+                Console.WriteLine("What is your email?");
+                user.Email = CollectEmailInput();
+                Console.WriteLine($"Nice to meet you {user.Name}");
+                Console.WriteLine("Let's create your first food-repository");
+                Console.WriteLine("How would you like to name your food-repository?");
+                user.FoodRepository = new FoodRepository(CollectStringInput("fridge"));
+                Console.WriteLine($"Now, add first product to your {user.FoodRepository.Name}");
+                string wantToAddanotherProduct;
+                do
+                {
+                    AvailableProductsMenu(user.FoodRepository);
+                    Console.WriteLine("Would you like to add another product?");
+                    wantToAddanotherProduct = CollectYesOrNoInput();
+
+                }
+                while (wantToAddanotherProduct == "yes");
+                FoodRepositoryMenu(user.FoodRepository);
+                usersList.Add(user);
+                var usersData = JsonConvert.SerializeObject(usersList, Formatting.Indented);
+
+                File.WriteAllText(Path.Combine(usersDataPath, "Users.json"), usersData);
+
+
+                var foodRepoData = JsonConvert.SerializeObject(user.FoodRepository, Formatting.Indented);
+                string foodReposPath = @"C:\Users\skier\Desktop\Projekt grupowy\MagicDish\MagicDish\bin\Debug\net6.0\FoodRepositories";
+                File.WriteAllText(Path.Combine(foodReposPath, $"{user.FoodRepository.Name}.json"), foodRepoData);
+            
         }
 
         private static void FoodRepositoryMenu(FoodRepository foodRepository)

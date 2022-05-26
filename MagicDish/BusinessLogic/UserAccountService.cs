@@ -2,10 +2,8 @@
 {
     public class UserAccountService
     {
-        public static List<UserAccount> Users = new List<UserAccount>
-        {
-            new UserAccount("Tomek","tomus123","tomek@gmail.com")
-        };
+        public static List<UserAccount> Users { get; set; }
+        
 
         public static List<UserAccount> GetUsers()
         {
