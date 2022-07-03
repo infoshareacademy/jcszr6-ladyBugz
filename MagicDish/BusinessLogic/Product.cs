@@ -6,6 +6,8 @@
         public string Name { get; set; }
         public UnitOfMeasure UnitOfMeasure { get; set; }
 
+        public ProductCategory ProductCategory { get; set; }
+
         public Product(int id, string name, UnitOfMeasure unitOfMeasure)
         {
             Id = id;

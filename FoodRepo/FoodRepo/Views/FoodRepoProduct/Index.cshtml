@@ -1,0 +1,54 @@
+﻿@model IEnumerable<FoodRepo.Models.FoodRepoProduct>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <label asp-for="First().Id"></label>
+            </th>
+            <th>
+                <label asp-for="First().Name"></label>
+            </th>
+            <th>
+                <label asp-for="First().Quantity"></label>
+            </th>
+            <th>
+                <label asp-for="First().UnitOfMeasure"></label>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var product in Model) {
+        <tr>
+            <td>
+                @product.Id
+            </td>
+            <td>
+                @product.Name
+            </td>
+            <td>
+                @product.Quantity
+            </td>
+            <td>
+                @product.UnitOfMeasure
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new {id=product.Id}) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+Number of available products: @Model.Count()
+    </tbody>
+</table>

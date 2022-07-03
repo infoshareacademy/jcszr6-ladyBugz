@@ -15,12 +15,6 @@ namespace MagicDish
         {
 
             Menu.WelcomeMenu();
-
-
-            
-
-
-
         }
     }
 }

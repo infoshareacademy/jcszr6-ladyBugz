@@ -1,0 +1,17 @@
+﻿@model FoodRepo.Models.FoodRepoProduct
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>FoodRepoProduct</h4>
+    <hr />
+    <partial name="Partials/_Details" model="@Model"/>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>
