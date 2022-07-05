@@ -14,7 +14,7 @@ namespace BusinessLogic
         public ProductQuantity(Product product, int quantity)
         {
             Product = product;
-            Quantity = quantity;    
+            Quantity = quantity;
         }
     }
 }

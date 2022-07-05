@@ -8,11 +8,12 @@
 
         public ProductCategory ProductCategory { get; set; }
 
-        public Product(int id, string name, UnitOfMeasure unitOfMeasure)
+        public Product(int id, string name, ProductCategory productCategory, UnitOfMeasure unitOfMeasure)
         {
             Id = id;
             Name = name;
             UnitOfMeasure = unitOfMeasure;
+            ProductCategory = productCategory;
         }
     }
 }

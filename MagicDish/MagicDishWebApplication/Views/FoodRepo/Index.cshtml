@@ -13,16 +13,40 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Quantity)
+                <label asp-for="First().Product.Id"></label>
+            </th>
+            <th>
+                <label asp-for="First().Product.Name"></label>
+            </th>
+            <th>
+                <label asp-for="First().Product.ProductCategory"></label>
+            </th>
+            <th>
+                <label asp-for="First().Quantity"></label>
+            </th>
+            <th>
+                <label asp-for="First().Product.UnitOfMeasure"></label>
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var product in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
+                @product.Product.Id
+            </td>
+            <td>
+                @product.Product.Name
+            </td>
+            <td>
+                @product.Product.ProductCategory
+            </td>
+            <td>
+                @product.Quantity
+            </td>
+            <td>
+                @product.Product.UnitOfMeasure
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
