@@ -8,6 +8,9 @@
 
         public ProductCategory ProductCategory { get; set; }
 
+        public Product()
+        {
+        }
         public Product(int id, string name, ProductCategory productCategory, UnitOfMeasure unitOfMeasure)
         {
             Id = id;

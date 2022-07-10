@@ -23,16 +23,16 @@ namespace MagicDishWebApplication.Controllers
             List<ProductQuantity> products = await _repository.GetAsync();
             return View(products);
         }
-
-
+        
         // GET: FoodRepoController/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            return View();
+            List<ProductQuantity> products = await _repository.GetAsync();
+            return View(products.FirstOrDefault(p => p.Product.Id == id));
         }
 
         // GET: FoodRepoController/Create
-        public ActionResult Create()
+        public async Task<IActionResult> Create()
         {
             return View();
         }
@@ -40,11 +40,19 @@ namespace MagicDishWebApplication.Controllers
         // POST: FoodRepoController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(ProductQuantity product)
         {
+            List<ProductQuantity> products = await _repository.GetAsync();
+
+            if (!ModelState.IsValid)
+            {
+                return View(product);
+            }
+
             try
             {
-                return RedirectToAction(nameof(Index));
+                products.Add(product);
+                return RedirectToAction("Index");
             }
             catch
             {
@@ -53,19 +61,44 @@ namespace MagicDishWebApplication.Controllers
         }
 
         // GET: FoodRepoController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            return View();
+            List<ProductQuantity> products = await _repository.GetAsync();
+
+            if (!products.Any(p => p.Product.Id == id))
+            {
+                //return StatusCode(StatusCodes.Status500InternalServerError);
+
+                return NotFound();
+
+                //return BadRequest();
+            }
+            return View(products.Single(p => p.Product.Id == id));
         }
 
         // POST: FoodRepoController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(int id, ProductQuantity product)
         {
+            List<ProductQuantity> products = await _repository.GetAsync();
+
+            if (!ModelState.IsValid)
+            {
+                return View(product);
+            }
+
             try
             {
-                return RedirectToAction(nameof(Index));
+                var existingProduct = products.First(a => a.Product.Id == product.Product.Id);
+
+                existingProduct.Product.Id = product.Product.Id;
+                existingProduct.Product.Name = product.Product.Name;
+                existingProduct.Product.ProductCategory = product.Product.ProductCategory;
+                existingProduct.Product.UnitOfMeasure = product.Product.UnitOfMeasure;
+                existingProduct.Quantity = product.Quantity;
+
+                return RedirectToAction("Index");
             }
             catch
             {
@@ -74,18 +107,26 @@ namespace MagicDishWebApplication.Controllers
         }
 
         // GET: FoodRepoController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            return View();
+            List<ProductQuantity> products = await _repository.GetAsync();
+
+            var existingProduct = products.First(p => p.Product.Id == id);
+            return View(existingProduct);
         }
 
         // POST: FoodRepoController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> Delete(int id, ProductQuantity product)
         {
+            List<ProductQuantity> products = await _repository.GetAsync();
+
             try
             {
+                var existingAlbum = products.First(p => p.Product.Id == id);
+                products.Remove(existingAlbum);
+
                 return RedirectToAction(nameof(Index));
             }
             catch
