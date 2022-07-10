@@ -79,24 +79,24 @@ namespace MagicDishWebApplication.Controllers
         // POST: FoodRepoController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, ProductQuantity product)
+        public async Task<IActionResult> Edit(int id, ProductQuantity productQuantity)
         {
             List<ProductQuantity> products = await _repository.GetAsync();
 
             if (!ModelState.IsValid)
             {
-                return View(product);
+                return View(productQuantity);
             }
 
             try
             {
-                var existingProduct = products.First(a => a.Product.Id == product.Product.Id);
+                var existingProduct = products.First(a => a.Product.Id == productQuantity.Product.Id);
 
-                existingProduct.Product.Id = product.Product.Id;
-                existingProduct.Product.Name = product.Product.Name;
-                existingProduct.Product.ProductCategory = product.Product.ProductCategory;
-                existingProduct.Product.UnitOfMeasure = product.Product.UnitOfMeasure;
-                existingProduct.Quantity = product.Quantity;
+                existingProduct.Product.Id = productQuantity.Product.Id;
+                existingProduct.Product.Name = productQuantity.Product.Name;
+                existingProduct.Product.ProductCategory = productQuantity.Product.ProductCategory;
+                existingProduct.Product.UnitOfMeasure = productQuantity.Product.UnitOfMeasure;
+                existingProduct.Quantity = productQuantity.Quantity;
 
                 return RedirectToAction("Index");
             }

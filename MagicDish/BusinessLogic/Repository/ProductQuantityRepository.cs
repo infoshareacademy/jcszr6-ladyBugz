@@ -18,5 +18,8 @@ namespace BusinessLogic.Repository
         {
             return Task.FromResult<List<ProductQuantity>>(_productsQuantity);
         }
+        
+        //TODO: get by id method
+        
     }
 }
