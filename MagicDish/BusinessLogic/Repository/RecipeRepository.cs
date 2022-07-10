@@ -13,8 +13,8 @@ namespace BusinessLogic.Repository
             new Recipe(1,"cheese tostie", 10, true,
                 new List<ProductQuantity>
                 {
-                    new ProductQuantity(new Product(4, "bread", UnitOfMeasure.pieces), 2),
-                    new ProductQuantity(new Product(5, "cheese", UnitOfMeasure.grams), 100)
+                    new ProductQuantity(new Product(4, "bread", ProductCategory.starch, UnitOfMeasure.pieces), 2),
+                    new ProductQuantity(new Product(5, "cheese", ProductCategory.dairy, UnitOfMeasure.grams), 100)
                 },
                 "put cheese inside bread, warm up"),
         };

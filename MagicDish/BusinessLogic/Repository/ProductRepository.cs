@@ -10,9 +10,9 @@ namespace BusinessLogic.Repository
     {
         static List<Product> _products = new List<Product>
         {
-            new Product(1,"pasta",UnitOfMeasure.grams),
-            new Product(2,"tomato",UnitOfMeasure.pieces),
-            new Product(3,"minced meat",UnitOfMeasure.grams),
+            new Product(1,"pasta", ProductCategory.starch, UnitOfMeasure.grams),
+            new Product(2,"tomato", ProductCategory.vegetable, UnitOfMeasure.pieces),
+            new Product(3,"minced meat", ProductCategory.meat, UnitOfMeasure.grams),
         };
         public Task<List<Product>> GetAsync()
         {
