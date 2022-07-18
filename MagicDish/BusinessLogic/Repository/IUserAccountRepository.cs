@@ -4,23 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLogic
+namespace BusinessLogic.Repository
 {
-    public class Menu
+    public interface IUserAccountRepository
     {
-
-
-
-
-
-
-
-        public class WelcomeMenu
-        {
-
-
-        }
-
-
+        Task<List<UserAccount>> GetAsync();
     }
 }

@@ -1,0 +1,59 @@
+﻿@model IEnumerable<BusinessLogic.ProductQuantity>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <label asp-for="First().Product.Id"></label>
+            </th>
+            <th>
+                <label asp-for="First().Product.Name"></label>
+            </th>
+            <th>
+                <label asp-for="First().Product.ProductCategory"></label>
+            </th>
+            <th>
+                <label asp-for="First().Quantity"></label>
+            </th>
+            <th>
+                <label asp-for="First().Product.UnitOfMeasure"></label>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var product in Model) {
+        <tr>
+            <td>
+                @product.Product.Id
+            </td>
+            <td>
+                @product.Product.Name
+            </td>
+            <td>
+                @product.Product.ProductCategory
+            </td>
+            <td>
+                @product.Quantity
+            </td>
+            <td>
+                @product.Product.UnitOfMeasure
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = product.Product.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = product.Product.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = product.Product.Id })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

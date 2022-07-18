@@ -1,32 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BusinessLogic
+﻿namespace BusinessLogic
 {
     public class UserAccount
     {
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public string Email { get; set; }
-        public int UserId { get; set; }
-        public string Username { get; set; }
-        public Fridge Fridge { get; set; }
+        public int Id { get; set; }
+        public String Name { get; set; }
+        public String Email { get; set; }
+        // public String Username { get; set; }
+        public string Password { get; set; }
+        public FoodRepository FoodRepository { get; set; } 
 
         public UserAccount()
         {
-
         }
 
-        public UserAccount(string name, string surname, string email, int UserID, string username)
+        public UserAccount(string name, string email, string password)
         {
             Name = name;
-            Surname = surname;
             Email = email;
-            UserId = UserID;
-            Username = username;
+            Password = password;
         }
     }
 }
