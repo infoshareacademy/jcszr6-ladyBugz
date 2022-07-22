@@ -1,0 +1,76 @@
+﻿@model IEnumerable<BusinessLogic.Recipe>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Welcome to your recipes list.</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create"><i class="bi bi-plus-circle"></i> Add new recipe </a>
+</p>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                <label asp-for="First().Id"></label>
+            </th>
+            <th>
+                <label asp-for="First().Name"></label>
+            </th>
+            <th>
+                <label asp-for="First().CookingTimeInMinutes"></label>
+            </th>
+            <th>
+                <label asp-for="First().IsVegeterian"></label>
+            </th>
+            <th>
+                <label asp-for="First().Description"></label>
+            </th>
+            <th>
+                <label asp-for="First().Ingredients"></label>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var recipe in Model) {
+        <tr>
+            <td>
+                @recipe.Id
+            </td>
+            <td>
+                @recipe.Name
+            </td>
+            <td>
+                @recipe.CookingTimeInMinutes
+            </td>
+            <td>
+                @recipe.IsVegeterian
+            </td>
+            <td>
+                @recipe.Description
+            </td>
+            <td>
+                @*@recipe.Ingredients*@
+                @foreach (var ingredient in recipe.Ingredients)
+                {
+                    
+                        @ingredient.Product.Name @Html.Raw(" ")
+                        @ingredient.Quantity @Html.Raw(" ")
+                        @ingredient.Product.UnitOfMeasure
+                        @Html.Raw("\n")
+                        @Html.Raw(",")
+                    
+                }
+            </td>
+
+            <td>
+                <a class="btn btn-primary" @Html.ActionLink("Edit", "Edit", new { id = recipe.Id }) ></a> 
+                <a class="btn btn-success" @Html.ActionLink("Details", "Details", new { id = recipe.Id }) ></a> 
+                <a class="btn btn-warning" @Html.ActionLink("Delete", "Delete", new { id = recipe.Id }) ></a> 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

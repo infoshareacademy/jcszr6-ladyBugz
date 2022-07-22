@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using BusinessLogic;
 using BusinessLogic.Repository;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+
 
 
 namespace MagicDishWebApplication.Controllers;
@@ -125,8 +125,8 @@ public class AvailableProductsController : Controller
 
         try
         {
-            var existingAlbum = products.First(p => p.Id == id);
-            products.Remove(existingAlbum);
+            var existingProduct = products.First(p => p.Id == id);
+            products.Remove(existingProduct);
 
             return RedirectToAction(nameof(Index));
         }
