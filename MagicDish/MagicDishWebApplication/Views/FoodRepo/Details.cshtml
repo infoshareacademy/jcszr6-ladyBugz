@@ -12,6 +12,6 @@
     <partial name="Partials/_Details" model="@Model" />
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Product.Id }) |
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-warning" @Html.ActionLink("Edit", "Edit", new { id = Model.Product.Id }) </a>
+    <a class="btn btn-success" asp-action="Index">Back to List</a>
 </div>

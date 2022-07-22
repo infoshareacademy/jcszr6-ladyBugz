@@ -4,17 +4,19 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Available Products</h1>
+<br />
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-success" asp-action="Create">Add new product to the database</a>
 </p>
+<br />
 <table class="table">
     <thead>
         <tr>
-            <th>
+            @*<th>
                 <label asp-for="First().Id"></label>
-            </th>
+            </th>*@
             <th>
                 <label asp-for="First().Name"></label>
             </th>
@@ -30,9 +32,9 @@
     <tbody>
 @foreach (var product in Model) {
         <tr>
-            <td>
+            @*<td>
                 @product.Id
-            </td>
+            </td>*@
             <td>
                 @product.Name
             </td>
@@ -43,9 +45,9 @@
                 @product.UnitOfMeasure
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = product.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = product.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = product.Id })
+                <a class="btn btn-primary" @Html.ActionLink("Edit", "Edit", new { id = product.Id }) ></a> 
+                <a class="btn btn-success" @Html.ActionLink("Details", "Details", new { id = product.Id }) ></a> 
+                <a class="btn btn-warning" @Html.ActionLink("Delete", "Delete", new { id = product.Id }) ></a> 
             </td>
         </tr>
 }
