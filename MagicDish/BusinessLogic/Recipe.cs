@@ -1,5 +1,7 @@
 ﻿namespace BusinessLogic
 {
+    using System.Collections.Generic;
+
     public class Recipe
     {
         public int Id { get; set; }
@@ -12,15 +14,5 @@
         public bool IsVegeterian { get; set; }
 
         public string Description { get; set; }
-
-        public Recipe (int id, string name, int cookingTimeInMinutes, bool isVegetarian, List<ProductQuantity> ingredients, string description)
-        {
-            Id = id;
-            Name = name;
-            Ingredients = ingredients;
-            CookingTimeInMinutes = cookingTimeInMinutes;
-            IsVegeterian = isVegetarian;
-            Description = description;
-        }
     }
 }
