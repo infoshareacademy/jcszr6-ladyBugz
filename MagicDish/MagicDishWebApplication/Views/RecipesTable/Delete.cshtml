@@ -12,34 +12,34 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            <label asp-for="Ingredients[0].Product.Id"></label>
+            <label asp-for="Id"></label>
         </dt>
         <dd class = "col-sm-10">
-            @Model.Ingredients[0].Product.Id
+            @Model.Id
         </dd>
         <dt class = "col-sm-2">
-            <label asp-for="Ingredients[0].Product.Name"></label>
+            <label asp-for="Name"></label>
         </dt>
         <dd class = "col-sm-10">
-            @Model.Ingredients[0].Product.Name
+            @Model.Name
         </dd>
         <dt class = "col-sm-2">
-            <label asp-for="Ingredients[0].Product.ProductCategory"></label>
+            <label asp-for="CookingTimeInMinutes"></label>
         </dt>
         <dd class = "col-sm-10">
-            @Model.Ingredients[0].Product.ProductCategory
+            @Model.CookingTimeInMinutes
         </dd>
         <dt class = "col-sm-2">
-            <label asp-for="Ingredients[0].Product.UnitOfMeasure"></label>
+            <label asp-for="IsVegeterian"></label>
         </dt>
         <dd class = "col-sm-10">
-            @Model.Ingredients[0].Product.UnitOfMeasure
+            @Model.IsVegeterian
         </dd>
         <dt class = "col-sm-2">
-            <label asp-for="Ingredients[0].Quantity"></label>
+            <label asp-for="Description"></label>
         </dt>
         <dd class = "col-sm-10">
-            @Model.Ingredients[0].Quantity
+            @Model.Description
         </dd>
     </dl>
     

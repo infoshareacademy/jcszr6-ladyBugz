@@ -1,8 +1,8 @@
-﻿namespace BusinessLogic
-{
-    using System.Collections.Generic;
+﻿using BusinessLogic;
 
-    public class Recipe
+namespace MagicDishWebApplication.Models
+{
+    public class RecipesModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -14,5 +14,7 @@
         public bool IsVegeterian { get; set; }
 
         public string Description { get; set; }
+
+        
     }
 }
