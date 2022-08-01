@@ -41,6 +41,61 @@
         <dd class = "col-sm-10">
             @Model.Ingredients[0].Quantity
         </dd>
+        <dd class = "col-sm-10">
+        <div>
+            Ingredients
+		    </div>
+
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                   @* <th>
+                        //id placeholder
+                    </th>  *@                
+                    <th>
+                        <label asp-for="Ingredients[0].Product.Name" class="control-label"></label>
+                    </th>
+                    <th>
+                        <label asp-for="Ingredients[0].Product.ProductCategory" class="control-label"></label>
+                    </th>
+                    <th>
+                        <label asp-for="Ingredients[0].Product.UnitOfMeasure" class="control-label"></label>
+                    </th>
+                    <th>
+                        <label asp-for="Ingredients[0].Quantity" class="control-label"></label>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                @for (var i = 0; i < Model.Ingredients.Count; i++)
+                {
+                    <tr>
+                        @*<td>
+                            <input type="hidden" asp-for="Ingredients[i].Product.Id" class="form-control"/>
+                        </td>*@
+                        <td>
+                            @Model.Ingredients[i].Product.Name
+                            <input type="hidden" asp-for="Ingredients[i].Product.Name" class="form-control"/>
+                        </td>
+                        <td>
+                            @Model.Ingredients[i].Product.ProductCategory
+                            <input type="hidden" asp-for="Ingredients[i].Product.ProductCategory" class="form-control"/>
+                        </td>
+                        <td>
+                            @Model.Ingredients[i].Product.UnitOfMeasure
+                            <input type="hidden" asp-for="Ingredients[i].Product.UnitOfMeasure" class="form-control"/>
+                        </td>
+                        <td>
+                            @Model.Ingredients[i].Quantity
+                            <input type="hidden" asp-for="Ingredients[i].Quantity" class="form-control"/>
+                        </td>
+                        
+                    </tr>
+                }
+                </tbody>
+            </table>
+            </dd>
+
     </dl>
     
     <form asp-action="Delete">
