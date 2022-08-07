@@ -120,7 +120,7 @@ namespace MagicDishWebApplication.Controllers
                 existingRecipe.Ingredients[0].Product.UnitOfMeasure = recipe.Ingredients[0].Product.UnitOfMeasure;
                 existingRecipe.Ingredients[0].Quantity = recipe.Ingredients[0].Quantity;
 
-                return RedirectToAction("Index");
+                return RedirectToAction(actionName:"Edit", controllerName:"Recipes", new{id=id});
             }
             catch
             {

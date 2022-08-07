@@ -12,6 +12,11 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="@Model.Name" value="@Model.Name" type="hidden" />
+            <input asp-for="@Model.Description" value="@Model.Description" type="hidden" />
+            <input asp-for="@Model.CookingTimeInMinutes" value="@Model.CookingTimeInMinutes" type="hidden" />
+            <input asp-for="@Model.IsVegeterian" value="@Model.IsVegeterian" type="hidden" />
+            
             <div class="form-group">
                 <label asp-for="Ingredients[0].Product.Id" class="control-label"></label>
                 <input asp-for="Ingredients[0].Product.Id" class="form-control" />
