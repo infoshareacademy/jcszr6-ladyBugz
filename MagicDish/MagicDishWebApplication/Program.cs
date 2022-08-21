@@ -1,8 +1,11 @@
-using BusinessLogic.Repository;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MagicDishWebApplication.Data;
 using MagicDishWebApplication.Models;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using MagicDishWebApplication.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,16 +15,24 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<MagicDishWebApplicationContext>(options =>
     options.UseSqlServer(connectionString));
 
+builder.Services.AddTransient<IEmailSender>(ServiceProvider => new EmailSender("localhost", 25, "no-reply@magicdish.com"));
+
+
+
 builder.Services.AddDefaultIdentity<MagicDishWebApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<MagicDishWebApplicationContext>();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddSingleton<IProductRepository, ProductRepository>();
-builder.Services.AddSingleton<IProductQuantityRepository, ProductQuantityRepository>();
-builder.Services.AddSingleton<IRecipeRepository, RecipeRepository>();
 
-builder.Services.AddControllersWithViews();
+
+
+
+//builder.Services.AddRazorPages();                   potrzebne?
+
+//builder.Services.AddControllersWithViews();
+
+builder.Services.AddControllersWithViews(view => view.Filters.Add(new AuthorizeFilter()));
 
 var app = builder.Build();
 

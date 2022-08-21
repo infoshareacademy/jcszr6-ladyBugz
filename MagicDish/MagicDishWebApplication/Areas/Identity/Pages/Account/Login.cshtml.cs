@@ -18,6 +18,7 @@ using MagicDishWebApplication.Models;
 
 namespace MagicDishWebApplication.Areas.Identity.Pages.Account
 {
+    [AllowAnonymous]
     public class LoginModel : PageModel
     {
         private readonly SignInManager<MagicDishWebApplicationUser> _signInManager;

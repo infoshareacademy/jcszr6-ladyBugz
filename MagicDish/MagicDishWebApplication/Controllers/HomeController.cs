@@ -1,27 +1,28 @@
 ﻿using BusinessLogic;
-using BusinessLogic.Repository;
 using MagicDishWebApplication.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 
 namespace MagicDishWebApplication.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private IProductRepository _repository;
+        
 
-        public HomeController(ILogger<HomeController> logger, IProductRepository repository)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            _repository = repository;
+            
         }
 
         public async Task<IActionResult> Index()
         {
-            List<Product> products = await _repository.GetAsync();
-            return View(products);
+
+            return View();
         }
 
         public IActionResult Privacy()

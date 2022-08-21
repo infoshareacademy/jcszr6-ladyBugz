@@ -10,11 +10,11 @@ using MagicDishWebApplication.Models;
 
 namespace MagicDishWebApplication.Controllers
 {
-    public class RecipesTableController : Controller
+    public class RecipesModelsController : Controller
     {
         private readonly MagicDishWebApplicationContext _context;
 
-        public RecipesTableController(MagicDishWebApplicationContext context)
+        public RecipesModelsController(MagicDishWebApplicationContext context)
         {
             _context = context;
         }
@@ -22,9 +22,9 @@ namespace MagicDishWebApplication.Controllers
         // GET: RecipesModels
         public async Task<IActionResult> Index()
         {
-            return _context.Recipes != null ?
-                        View(await _context.Recipes.ToListAsync()) :
-                        Problem("Entity set 'MagicDishWebApplicationContext.Recipes'  is null.");
+              return _context.Recipes != null ? 
+                          View(await _context.Recipes.ToListAsync()) :
+                          Problem("Entity set 'MagicDishWebApplicationContext.Recipes'  is null.");
         }
 
         // GET: RecipesModels/Details/5
@@ -148,14 +148,14 @@ namespace MagicDishWebApplication.Controllers
             {
                 _context.Recipes.Remove(recipesModel);
             }
-
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool RecipesModelExists(int id)
         {
-            return (_context.Recipes?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Recipes?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
