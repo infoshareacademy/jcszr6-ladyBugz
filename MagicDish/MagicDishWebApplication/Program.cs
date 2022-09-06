@@ -6,6 +6,8 @@ using MagicDishWebApplication.Models;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using MagicDishWebApplication.Services;
+using BusinessLogic;
+using BusinessLogic.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +19,7 @@ builder.Services.AddDbContext<MagicDishWebApplicationContext>(options =>
 
 builder.Services.AddTransient<IEmailSender>(ServiceProvider => new EmailSender("localhost", 25, "no-reply@magicdish.com"));
 
+builder.Services.AddScoped<IProductQuantityRepository, ProductQuantityRepository>();
 
 
 builder.Services.AddDefaultIdentity<MagicDishWebApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)

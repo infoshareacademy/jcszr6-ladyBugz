@@ -24,7 +24,7 @@ public class MagicDishWebApplicationContext : IdentityDbContext<MagicDishWebAppl
     public DbSet<FoodRepositoryModel> FoodRepositories { get; set; }
     public DbSet<FoodRepositoryProductModel> FoodRepositoryProducts { get; set; }
     public DbSet<RecipesModel> Recipes { get; set; }
-    //public DbSet<ProductModel> ProductModel { get; set; }
-    //public DbSet<ProductQuantityModel> ProductQuantityModel { get; set; }
+    public DbSet<ProductModel> ProductModel { get; set; }
+    public DbSet<ProductQuantityModel> ProductQuantityModel { get; set; }
 
 }

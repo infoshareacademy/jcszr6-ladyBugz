@@ -12,17 +12,138 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MagicDishWebApplication.Migrations
 {
     [DbContext(typeof(MagicDishWebApplicationContext))]
-    [Migration("20220807172353_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220904180448_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.7")
+                .HasAnnotation("ProductVersion", "6.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("BusinessLogic.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductCategory")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UnitOfMeasure")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Product");
+                });
+
+            modelBuilder.Entity("BusinessLogic.ProductQuantity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("FoodRepositoryModelId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RecipesModelId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FoodRepositoryModelId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("RecipesModelId");
+
+                    b.ToTable("ProductQuantity");
+                });
+
+            modelBuilder.Entity("MagicDishWebApplication.Models.AvailableProductModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductCategory")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UnitOfMeasure")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AvailableProducts");
+                });
+
+            modelBuilder.Entity("MagicDishWebApplication.Models.FoodRepositoryModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("MagicDishWebApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MagicDishWebApplicationUserId");
+
+                    b.ToTable("FoodRepositories");
+                });
+
+            modelBuilder.Entity("MagicDishWebApplication.Models.FoodRepositoryProductModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("FoodRepositoryProducts");
+                });
 
             modelBuilder.Entity("MagicDishWebApplication.Models.MagicDishWebApplicationUser", b =>
                 {
@@ -87,6 +208,33 @@ namespace MagicDishWebApplication.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("MagicDishWebApplication.Models.RecipesModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CookingTimeInMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsVegeterian")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Recipes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -226,6 +374,47 @@ namespace MagicDishWebApplication.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("BusinessLogic.ProductQuantity", b =>
+                {
+                    b.HasOne("MagicDishWebApplication.Models.FoodRepositoryModel", null)
+                        .WithMany("Products")
+                        .HasForeignKey("FoodRepositoryModelId");
+
+                    b.HasOne("BusinessLogic.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MagicDishWebApplication.Models.RecipesModel", null)
+                        .WithMany("Ingredients")
+                        .HasForeignKey("RecipesModelId");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("MagicDishWebApplication.Models.FoodRepositoryModel", b =>
+                {
+                    b.HasOne("MagicDishWebApplication.Models.MagicDishWebApplicationUser", "MagicDishWebApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("MagicDishWebApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MagicDishWebApplicationUser");
+                });
+
+            modelBuilder.Entity("MagicDishWebApplication.Models.FoodRepositoryProductModel", b =>
+                {
+                    b.HasOne("BusinessLogic.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -275,6 +464,16 @@ namespace MagicDishWebApplication.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MagicDishWebApplication.Models.FoodRepositoryModel", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("MagicDishWebApplication.Models.RecipesModel", b =>
+                {
+                    b.Navigation("Ingredients");
                 });
 #pragma warning restore 612, 618
         }
