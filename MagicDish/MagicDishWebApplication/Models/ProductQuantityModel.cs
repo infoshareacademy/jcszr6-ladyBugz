@@ -1,4 +1,4 @@
-﻿using BusinessLogic;
+﻿using MagicDishWebApplication;
 
 namespace MagicDishWebApplication.Models
 {

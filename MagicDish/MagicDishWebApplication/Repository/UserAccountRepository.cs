@@ -1,10 +1,11 @@
-﻿using System;
+﻿using BusinessLogic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLogic.Repository
+namespace MagicDishWebApplication.Repository
 {
     public class UserAccountRepository : IUserAccountRepository
     {

@@ -7,23 +7,31 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MagicDishWebApplication.Data;
 using MagicDishWebApplication.Models;
+using MagicDishWebApplication.Repository;
+using AutoMapper;
 
 namespace MagicDishWebApplication.Controllers
 {
-    public class FoodRepositoryModelController : Controller
+    public class FoodRepositoryController : Controller
     {
         private readonly MagicDishWebApplicationContext _context;
+        private readonly IFoodRepositoryRepository _foodRepository;
+        private readonly IMapper _mapper;
 
-        public FoodRepositoryModelController(MagicDishWebApplicationContext context)
+        public FoodRepositoryController(MagicDishWebApplicationContext context, IFoodRepositoryRepository foodRepository, IMapper mapper)
         {
             _context = context;
+            _foodRepository = foodRepository;
+            _mapper = mapper;
         }
 
         // GET: FoodRepositoryModels
         public async Task<IActionResult> Index()
         {
-              return _context.FoodRepositories != null ? 
-                          View(await _context.FoodRepositories.ToListAsync()) :
+            var foodRepositories = _foodRepository.GetAll();
+            var foodRepo = foodRepositories.Select(x => _mapper.Map<FoodRepositoryModel> (x ));  
+            return foodRepo != null ? 
+                          View(foodRepo) :
                           Problem("Entity set 'MagicDishWebApplicationContext.FoodRepositories'  is null.");
         }
 

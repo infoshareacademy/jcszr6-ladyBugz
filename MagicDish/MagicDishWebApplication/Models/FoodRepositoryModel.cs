@@ -1,4 +1,4 @@
-﻿using BusinessLogic;
+﻿using MagicDishWebApplication;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MagicDishWebApplication.Models

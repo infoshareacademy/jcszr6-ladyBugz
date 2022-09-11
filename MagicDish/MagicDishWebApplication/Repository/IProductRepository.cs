@@ -1,4 +1,6 @@
-﻿namespace BusinessLogic.Repository
+﻿using BusinessLogic;
+
+namespace MagicDishWebApplication.Repository
 {
     public interface IProductRepository
     {

@@ -1,4 +1,4 @@
-﻿using BusinessLogic;
+﻿using MagicDishWebApplication;
 using MagicDishWebApplication.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

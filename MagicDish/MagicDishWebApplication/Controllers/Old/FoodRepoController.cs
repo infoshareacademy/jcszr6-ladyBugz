@@ -1,5 +1,5 @@
-﻿//using BusinessLogic;
-//using BusinessLogic.Repository;
+﻿//using MagicDishWebApplication;
+//using MagicDishWebApplication.Repository;
 //using MagicDishWebApplication.Data;
 //using Microsoft.AspNetCore.Http;
 //using Microsoft.AspNetCore.Mvc;

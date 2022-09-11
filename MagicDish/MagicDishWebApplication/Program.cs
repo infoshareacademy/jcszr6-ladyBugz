@@ -6,7 +6,8 @@ using MagicDishWebApplication.Models;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using MagicDishWebApplication.Services;
-using BusinessLogic.Repository;
+using MagicDishWebApplication.Repository;
+using MagicDishWebApplication.MappingProfiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,9 +26,12 @@ builder.Services.AddTransient<IEmailSender>(ServiceProvider => new EmailSender("
 builder.Services.AddDefaultIdentity<MagicDishWebApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<MagicDishWebApplicationContext>();
 
+builder.Services.AddScoped<IFoodRepositoryRepository, FoodRepositoryRepository>();
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 
 
