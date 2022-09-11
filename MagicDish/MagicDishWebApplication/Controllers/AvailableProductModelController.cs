@@ -10,11 +10,11 @@ using MagicDishWebApplication.Models;
 
 namespace MagicDishWebApplication.Controllers
 {
-    public class AvailableProductModelsController : Controller
+    public class AvailableProductModelController : Controller
     {
         private readonly MagicDishWebApplicationContext _context;
 
-        public AvailableProductModelsController(MagicDishWebApplicationContext context)
+        public AvailableProductModelController(MagicDishWebApplicationContext context)
         {
             _context = context;
         }

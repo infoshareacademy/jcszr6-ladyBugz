@@ -55,7 +55,7 @@ namespace MagicDishWebApplication.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,CookingTimeInMinutes,IsVegeterian,Description")] RecipesModel recipesModel)
+        public async Task<IActionResult> Create([Bind("Id,Name,CookingTimeInMinutes,IsVegeterian,Description")] RecipeModel recipesModel)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace MagicDishWebApplication.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,CookingTimeInMinutes,IsVegeterian,Description")] RecipesModel recipesModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,CookingTimeInMinutes,IsVegeterian,Description")] RecipeModel recipesModel)
         {
             if (id != recipesModel.Id)
             {

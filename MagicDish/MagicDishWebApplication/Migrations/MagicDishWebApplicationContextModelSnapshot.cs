@@ -208,6 +208,50 @@ namespace MagicDishWebApplication.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("MagicDishWebApplication.Models.ProductModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductCategory")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UnitOfMeasure")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductModel");
+                });
+
+            modelBuilder.Entity("MagicDishWebApplication.Models.ProductQuantityModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductQuantityModel");
+                });
+
             modelBuilder.Entity("MagicDishWebApplication.Models.RecipesModel", b =>
                 {
                     b.Property<int>("Id")
@@ -403,6 +447,17 @@ namespace MagicDishWebApplication.Migrations
                 });
 
             modelBuilder.Entity("MagicDishWebApplication.Models.FoodRepositoryProductModel", b =>
+                {
+                    b.HasOne("BusinessLogic.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("MagicDishWebApplication.Models.ProductQuantityModel", b =>
                 {
                     b.HasOne("BusinessLogic.Product", "Product")
                         .WithMany()

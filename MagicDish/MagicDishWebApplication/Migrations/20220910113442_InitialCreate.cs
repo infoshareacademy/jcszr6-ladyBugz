@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MagicDishWebApplication.Migrations
 {
-    public partial class initial : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -76,6 +76,21 @@ namespace MagicDishWebApplication.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Product", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductModel",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UnitOfMeasure = table.Column<int>(type: "int", nullable: false),
+                    ProductCategory = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductModel", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -241,6 +256,26 @@ namespace MagicDishWebApplication.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ProductQuantityModel",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductQuantityModel", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductQuantityModel_Product_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Product",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ProductQuantity",
                 columns: table => new
                 {
@@ -335,6 +370,11 @@ namespace MagicDishWebApplication.Migrations
                 name: "IX_ProductQuantity_RecipesModelId",
                 table: "ProductQuantity",
                 column: "RecipesModelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductQuantityModel_ProductId",
+                table: "ProductQuantityModel",
+                column: "ProductId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -361,7 +401,13 @@ namespace MagicDishWebApplication.Migrations
                 name: "FoodRepositoryProducts");
 
             migrationBuilder.DropTable(
+                name: "ProductModel");
+
+            migrationBuilder.DropTable(
                 name: "ProductQuantity");
+
+            migrationBuilder.DropTable(
+                name: "ProductQuantityModel");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -370,10 +416,10 @@ namespace MagicDishWebApplication.Migrations
                 name: "FoodRepositories");
 
             migrationBuilder.DropTable(
-                name: "Product");
+                name: "Recipes");
 
             migrationBuilder.DropTable(
-                name: "Recipes");
+                name: "Product");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

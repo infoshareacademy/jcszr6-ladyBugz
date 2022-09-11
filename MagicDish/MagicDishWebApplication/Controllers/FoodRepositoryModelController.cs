@@ -10,11 +10,11 @@ using MagicDishWebApplication.Models;
 
 namespace MagicDishWebApplication.Controllers
 {
-    public class FoodRepositoryModelsController : Controller
+    public class FoodRepositoryModelController : Controller
     {
         private readonly MagicDishWebApplicationContext _context;
 
-        public FoodRepositoryModelsController(MagicDishWebApplicationContext context)
+        public FoodRepositoryModelController(MagicDishWebApplicationContext context)
         {
             _context = context;
         }
@@ -65,6 +65,7 @@ namespace MagicDishWebApplication.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(foodRepositoryModel);
+            
         }
 
         // GET: FoodRepositoryModels/Edit/5

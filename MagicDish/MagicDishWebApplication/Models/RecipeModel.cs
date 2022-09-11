@@ -2,7 +2,7 @@
 
 namespace MagicDishWebApplication.Models
 {
-    public class RecipesModel
+    public class RecipeModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
