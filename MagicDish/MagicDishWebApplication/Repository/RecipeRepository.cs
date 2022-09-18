@@ -1,4 +1,5 @@
 ﻿using BusinessLogic;
+using MagicDishWebApplication.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,26 +10,15 @@ namespace MagicDishWebApplication.Repository
 {
     public class RecipeRepository : IRecipeRepository
     {
-        static List<Recipe> _recipes = new List<Recipe>
+        private MagicDishWebApplicationContext _context;
+        public RecipeRepository(MagicDishWebApplicationContext context)
         {
-            new Recipe
-            {
-                Id = 1,
-                Name = "cheese tostie",
-                IsVegeterian = true,
-                Ingredients = new List<ProductQuantity>
-                {
-                    new ProductQuantity(new Product(4, "bread", ProductCategory.starch, UnitOfMeasure.pieces), 2),
-                    new ProductQuantity(new Product(5, "cheese", ProductCategory.dairy, UnitOfMeasure.grams), 100)
-                },
-                Description = "put cheese inside bread, warm up",
-                CookingTimeInMinutes = 10
-            }
-        };
+            _context = context;
+        }
 
-        public Task<List<Recipe>> GetAsync()
+        public IEnumerable<Recipe> GetAll()
         {
-            return Task.FromResult<List<Recipe>>(_recipes);
+            return (IEnumerable<Recipe>)_context.Recipes.AsEnumerable();
         }
     }
 }

@@ -27,6 +27,8 @@ builder.Services.AddDefaultIdentity<MagicDishWebApplicationUser>(options => opti
     .AddEntityFrameworkStores<MagicDishWebApplicationContext>();
 
 builder.Services.AddScoped<IFoodRepositoryRepository, FoodRepositoryRepository>();
+builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
+
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

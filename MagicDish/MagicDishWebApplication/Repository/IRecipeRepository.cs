@@ -4,6 +4,6 @@ namespace MagicDishWebApplication.Repository
 {
     public interface IRecipeRepository
     {
-        Task<List<Recipe>> GetAsync();
+        IEnumerable<Recipe> GetAll();
     }
 }

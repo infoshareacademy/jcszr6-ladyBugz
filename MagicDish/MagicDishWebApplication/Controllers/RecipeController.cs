@@ -7,23 +7,32 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MagicDishWebApplication.Data;
 using MagicDishWebApplication.Models;
+using MagicDishWebApplication.Repository;
+using AutoMapper;
 
 namespace MagicDishWebApplication.Controllers
 {
-    public class RecipeModelController : Controller
+    public class RecipeController : Controller
     {
         private readonly MagicDishWebApplicationContext _context;
+        private readonly IRecipeRepository _recipeRepository;
+        private readonly IMapper _mapper;
 
-        public RecipeModelController(MagicDishWebApplicationContext context)
+        public RecipeController(MagicDishWebApplicationContext context, IRecipeRepository recipeRepository, IMapper mapper)
         {
             _context = context;
+            _recipeRepository = recipeRepository;
+            _mapper = mapper;
+
         }
 
         // GET: RecipesModels
         public async Task<IActionResult> Index()
         {
-              return _context.Recipes != null ? 
-                          View(await _context.Recipes.ToListAsync()) :
+            var recipes = _recipeRepository.GetAll();
+            var recipe = recipes.Select(x => _mapper.Map<RecipeModel>(x));
+            return recipe != null ? 
+                          View(recipe) :
                           Problem("Entity set 'MagicDishWebApplicationContext.Recipes'  is null.");
         }
 

@@ -1,4 +1,5 @@
-﻿using MagicDishWebApplication;
+﻿using BusinessLogic;
+using MagicDishWebApplication;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MagicDishWebApplication.Models
@@ -10,7 +11,6 @@ namespace MagicDishWebApplication.Models
         public string Name { get; set; }
 
         public IList<ProductQuantity> Products { get; set; }
-        
         
         public MagicDishWebApplicationUser MagicDishWebApplicationUser { get; set; }
     }

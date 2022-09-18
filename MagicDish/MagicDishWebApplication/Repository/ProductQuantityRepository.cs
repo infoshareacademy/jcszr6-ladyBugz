@@ -1,4 +1,5 @@
-﻿using MagicDishWebApplication;
+﻿using BusinessLogic;
+using MagicDishWebApplication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MagicDishWebApplication.Repository
 {
-    public class ProductQuantityRepository : IProductQuantityRepository
+    public class ProductQuantityRepository
     {
         static List<ProductQuantity> _productsQuantity = new List<ProductQuantity>
         {

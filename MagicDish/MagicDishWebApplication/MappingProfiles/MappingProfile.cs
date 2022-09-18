@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BusinessLogic;
 using MagicDishWebApplication;
 using MagicDishWebApplication.Models;
 
@@ -9,6 +10,7 @@ namespace MagicDishWebApplication.MappingProfiles
         public MappingProfile()
         {
             CreateMap<FoodRepository, FoodRepositoryModel>().ReverseMap();
+            CreateMap<Recipe, RecipeModel>().ReverseMap();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using MagicDishWebApplication;
+﻿using BusinessLogic;
+using MagicDishWebApplication;
 using MagicDishWebApplication.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,7 +15,7 @@ namespace MagicDishWebApplication.Repository
 
         public IEnumerable<FoodRepository> GetAll()
         {
-             return (IEnumerable<FoodRepository>)_context.FoodRepositories.AsEnumerable();
+            return (IEnumerable<FoodRepository>)_context.FoodRepositories.AsEnumerable();
         }
     }
 }

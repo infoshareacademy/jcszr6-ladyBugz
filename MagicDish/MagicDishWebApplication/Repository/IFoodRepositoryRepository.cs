@@ -1,4 +1,5 @@
-﻿using MagicDishWebApplication;
+﻿using BusinessLogic;
+using MagicDishWebApplication;
 
 namespace MagicDishWebApplication.Repository
 {
