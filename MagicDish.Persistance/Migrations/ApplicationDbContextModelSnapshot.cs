@@ -22,7 +22,7 @@ namespace MagicDish.Persistance.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Lodowka.Core.Models.Fridge", b =>
+            modelBuilder.Entity("MagicDish.Core.Models.Fridge", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -42,7 +42,7 @@ namespace MagicDish.Persistance.Migrations
                     b.ToTable("Fridges");
                 });
 
-            modelBuilder.Entity("Lodowka.Core.Models.Product", b =>
+            modelBuilder.Entity("MagicDish.Core.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -76,7 +76,7 @@ namespace MagicDish.Persistance.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("Product");
                 });
 
-            modelBuilder.Entity("Lodowka.Core.Models.Recipe", b =>
+            modelBuilder.Entity("MagicDish.Core.Models.Recipe", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -103,7 +103,7 @@ namespace MagicDish.Persistance.Migrations
                     b.ToTable("Recipe");
                 });
 
-            modelBuilder.Entity("Lodowka.Core.Models.User", b =>
+            modelBuilder.Entity("MagicDish.Core.Models.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -305,9 +305,9 @@ namespace MagicDish.Persistance.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Lodowka.Core.Models.ProductQuantity", b =>
+            modelBuilder.Entity("MagicDish.Core.Models.ProductQuantity", b =>
                 {
-                    b.HasBaseType("Lodowka.Core.Models.Product");
+                    b.HasBaseType("MagicDish.Core.Models.Product");
 
                     b.Property<int?>("FridgeId")
                         .HasColumnType("int");
@@ -320,9 +320,9 @@ namespace MagicDish.Persistance.Migrations
                     b.HasDiscriminator().HasValue("ProductQuantity");
                 });
 
-            modelBuilder.Entity("Lodowka.Core.Models.Product", b =>
+            modelBuilder.Entity("MagicDish.Core.Models.Product", b =>
                 {
-                    b.HasOne("Lodowka.Core.Models.Recipe", null)
+                    b.HasOne("MagicDish.Core.Models.Recipe", null)
                         .WithMany("Ingredients")
                         .HasForeignKey("RecipeId");
                 });
@@ -338,7 +338,7 @@ namespace MagicDish.Persistance.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Lodowka.Core.Models.User", null)
+                    b.HasOne("MagicDish.Core.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -347,7 +347,7 @@ namespace MagicDish.Persistance.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Lodowka.Core.Models.User", null)
+                    b.HasOne("MagicDish.Core.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -362,7 +362,7 @@ namespace MagicDish.Persistance.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Lodowka.Core.Models.User", null)
+                    b.HasOne("MagicDish.Core.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -371,26 +371,26 @@ namespace MagicDish.Persistance.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Lodowka.Core.Models.User", null)
+                    b.HasOne("MagicDish.Core.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Lodowka.Core.Models.ProductQuantity", b =>
+            modelBuilder.Entity("MagicDish.Core.Models.ProductQuantity", b =>
                 {
-                    b.HasOne("Lodowka.Core.Models.Fridge", null)
+                    b.HasOne("MagicDish.Core.Models.Fridge", null)
                         .WithMany("Products")
                         .HasForeignKey("FridgeId");
                 });
 
-            modelBuilder.Entity("Lodowka.Core.Models.Fridge", b =>
+            modelBuilder.Entity("MagicDish.Core.Models.Fridge", b =>
                 {
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("Lodowka.Core.Models.Recipe", b =>
+            modelBuilder.Entity("MagicDish.Core.Models.Recipe", b =>
                 {
                     b.Navigation("Ingredients");
                 });

@@ -15,4 +15,8 @@
     <ProjectReference Include="..\MagicDish.Core\MagicDish.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>
