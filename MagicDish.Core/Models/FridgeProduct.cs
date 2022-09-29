@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MagicDish.Core.Models
 {
@@ -7,6 +7,10 @@ namespace MagicDish.Core.Models
     {
         [Key]
         public int Id { get; set; }
+
         public int FridgeId { get; set; }
+
+        [ForeignKey("FridgeId")]
+        public Fridge Fridge { get; set; }
     }
 }
