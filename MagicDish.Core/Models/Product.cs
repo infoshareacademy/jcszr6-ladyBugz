@@ -9,5 +9,6 @@ namespace MagicDish.Core.Models
         public string Name { get; set; }
         public UnitOfMeasure UnitOfMeasure { get; set; }
         public ProductCategory ProductCategory { get; set; }
+        public bool isVegan { get; set; }
     }
 }
