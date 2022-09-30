@@ -20,7 +20,7 @@ namespace MagicDish.Web.Controllers
             var fridgeContent = _context.FridgeProducts;
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var fridgeContentList = fridgeContent.Where(u => u.Fridge.UserId == userId)
+            List<FridgeContentViewModel> fridgeContentList = fridgeContent.Where(u => u.Fridge.UserId == userId)
                 .Join(productsInformation,
                     f => f.ProductId,
                     p => p.Id, (f, p) => new
