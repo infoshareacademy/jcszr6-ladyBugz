@@ -1,0 +1,30 @@
+﻿@model MagicDish.Web.ViewModels.FridgeContentViewModel
+
+<form method="post">
+    <div>
+        <div class="row pb-2">
+            <h2 class="text-primary">Add new product to your fridge</h2>
+        </div>
+        <div class="m-3">
+            <label asp-for="ProductCategory"></label>
+            <input asp-for="ProductCategory" class="form-control" />
+        </div>
+        <div class="m-3">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" />
+        </div>
+        <div class="m-3">
+            <label asp-for="Amount"></label>
+            <input asp-for="Amount" class="form-control" />
+        </div>
+        <div class="m-3">
+            <label asp-for="UnitOfMeasure"></label>
+            <input asp-for="UnitOfMeasure" class="form-control" />
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary" style="width:200px">Add Product</button>
+        <a asp-controller="FridgeContent" asp-action="Index" class="btn btn-secondary" style="width:200px">
+            Back to your fridge
+        </a>
+    </div>
+</form>

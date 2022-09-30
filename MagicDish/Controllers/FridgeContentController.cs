@@ -33,16 +33,23 @@ namespace MagicDish.Web.Controllers
                     })
                 .Select(f => new FridgeContentViewModel
                 {
-                    Name = f.Name,
-                    UnitOfMeasure = f.UnitOfMeasure,
                     ProductCategory = f.ProductCategory,
-                    IsVegan = f.IsVegan,
+                    Name = f.Name,
                     Amount = f.Amount,
+                    UnitOfMeasure = f.UnitOfMeasure,
+                    IsVegan = f.IsVegan,
                 })
                 .OrderBy(p => p.Name)
                 .ToList();
 
             return View(fridgeContentList);
         }
+
+        //GET
+        public IActionResult Create()
+        {
+            return View();
+        }
+
     }
 }
