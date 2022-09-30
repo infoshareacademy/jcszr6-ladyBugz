@@ -57,7 +57,7 @@ namespace MagicDish.Persistance.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UnitOfMeasure = table.Column<int>(type: "int", nullable: false),
                     ProductCategory = table.Column<int>(type: "int", nullable: false),
-                    isVegan = table.Column<bool>(type: "bit", nullable: false)
+                    IsVegan = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

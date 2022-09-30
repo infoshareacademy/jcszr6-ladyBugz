@@ -113,7 +113,7 @@ namespace MagicDish.Persistance.Migrations
                     b.Property<int>("UnitOfMeasure")
                         .HasColumnType("int");
 
-                    b.Property<bool>("isVegan")
+                    b.Property<bool>("IsVegan")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
