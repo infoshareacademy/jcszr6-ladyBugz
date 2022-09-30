@@ -11,10 +11,12 @@ namespace MagicDish.Web.Controllers
         private readonly ApplicationDbContext _context;
         public FridgeContentController(ApplicationDbContext context)
         {
+            _context = context;
         }
 
         public IActionResult Index()
         {
+            var FridgeProductList = _context.FridgeProducts.ToList();
             return View();
         }
     }
