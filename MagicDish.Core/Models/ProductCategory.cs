@@ -1,8 +1,8 @@
 ﻿public enum ProductCategory
 {
-    fruit,
-    vegetable,
-    starch,
-    dairy,
-    meat,
+    fruit, //0
+    vegetable, //1
+    starch, //2
+    dairy, //3
+    meat, //4
 }
