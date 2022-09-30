@@ -5,6 +5,15 @@
 
 <h1>Welcome to your fridge!</h1>
 
+<div class="row pt-4">
+    <div class="col-6">
+        <h2>Products available in your fridge</h2>
+    </div>
+    <div class="col-6 text-end">
+        <a asp-controller="Fridge" asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-square"></i> &nbsp; Add new product</a>
+    </div>
+</div>
+
 <table class="table table-bordered table-striped" style="width:100%">
     <thead>
         <tr>

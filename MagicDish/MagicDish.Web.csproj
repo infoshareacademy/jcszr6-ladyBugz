@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>aspnet-Lodowka-73D4CDFB-3238-418E-A6AA-ED6369C5DE3C</UserSecretsId>
+    <UserSecretsId>aspnet-Fridge-73D4CDFB-3238-418E-A6AA-ED6369C5DE3C</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
