@@ -1,8 +1,7 @@
 ﻿using MagicDish.Core.Models;
 using MagicDish.Persistance.Data;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace MagicDish.Web.Controllers
 {
@@ -16,7 +15,23 @@ namespace MagicDish.Web.Controllers
 
         public IActionResult Index()
         {
-            var FridgeProductList = _context.FridgeProducts.ToList();
+            var productsInformation = _context.AvailableProducts;
+            var fridgeContent = _context.FridgeProducts;
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var fridgeProductList = fridgeContent.Where(u => u.Fridge.UserId == userId)
+                .Join(productsInformation,
+                    f => f.ProductId,
+                    p => p.Id, (f, p) => new
+                    {
+                        p.Name,
+                        p.UnitOfMeasure,
+                        p.ProductCategory,
+                        p.isVegan,
+                        f.Amount,
+                    })
+                .OrderBy(p => p.Name);
+
             return View();
         }
     }
