@@ -16,12 +16,12 @@ namespace MagicDish.Web.Controllers
 
         public IActionResult Index()
         {
-            var productsInformation = _context.AvailableProducts;
-            var fridgeContent = _context.FridgeProducts;
-
+            var availableProducts = _context.AvailableProducts;
+            var fridgeProducts = _context.FridgeProducts;
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            List<FridgeContentViewModel> fridgeContentList = fridgeContent.Where(u => u.Fridge.UserId == userId)
-                .Join(productsInformation,
+
+            List<FridgeContentViewModel> fridgeContentList = fridgeProducts.Where(u => u.Fridge.UserId == userId)
+                .Join(availableProducts,
                     f => f.ProductId,
                     p => p.Id, (f, p) => new
                     {
@@ -51,5 +51,25 @@ namespace MagicDish.Web.Controllers
             return View();
         }
 
+        //POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(FridgeContentViewModel obj)
+        {
+            var availableProducts = _context.AvailableProducts;
+            var fridgeProducts = _context.FridgeProducts;
+            var fridges = _context.Fridges;
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+
+            FridgeProduct fridgeProduct = new FridgeProduct();
+            fridgeProduct.Amount = obj.Amount;
+            fridgeProduct.FridgeId = fridges.Where(u => u.UserId == userId).FirstOrDefault().Id;
+            fridgeProduct.ProductId = availableProducts.Where(p => p.Name == obj.Name).FirstOrDefault().Id;
+
+            fridgeProducts.Add(fridgeProduct);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }
