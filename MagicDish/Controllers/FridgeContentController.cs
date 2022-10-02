@@ -73,6 +73,14 @@ namespace MagicDish.Web.Controllers
             return Json(productsList);
         }
 
+        [HttpPost]
+        public JsonResult SetUnitOfMeasure(string value)
+        {
+            var availableProducts = _context.AvailableProducts;
+            var unitOfMeasure = availableProducts.Where(p => p.Name == value).Select(p => p.UnitOfMeasure).FirstOrDefault().ToString();
+            return Json(unitOfMeasure);
+        }
+
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
