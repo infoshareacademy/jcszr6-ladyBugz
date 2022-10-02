@@ -7,21 +7,19 @@
         </div>
         <div class="m-3">
             <label asp-for="ProductCategory"></label>
-            <select asp-for="ProductCategory" asp-items="@Model.ProductCategoriesDropdown" class="form-control">
-            </select>
+            <select asp-for="ProductCategory" asp-items="Model.ProductCategoriesDropdown" class="form-control"></select>
         </div>
         <div class="m-3" style="display: none" id="ProductNameDiv">
             <label asp-for="ProductName"></label>
-            <select asp-for="ProductName" asp-items="Model.ProductsDropdown">
-            </select>
+            <select asp-for="ProductName" asp-items="Model.ProductsDropdown" class="form-control"></select>
         </div>
-        <div class="m-3" style="display: none"  id="AmountDiv">
+        <div class="m-3" style="display: none" id="AmountDiv">
             <label asp-for="Amount"></label>
             <input asp-for="Amount" class="form-control" />
         </div>
         <div class="m-3" style="display: none"  id="UnitOfMeasureDiv">
             <label asp-for="UnitOfMeasure"></label>
-            <select asp-for="UnitOfMeasure" asp-items="Model.UnitsOfMeasureDropdown"></select>
+            <select asp-for="UnitOfMeasure" asp-items="Model.UnitsOfMeasureDropdown" class="form-control"></select>
         </div>
         <br />
         <button type="submit" class="btn btn-primary" style="width:200px">Add Product</button>
