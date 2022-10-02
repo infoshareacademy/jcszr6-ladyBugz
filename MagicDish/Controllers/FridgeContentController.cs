@@ -57,7 +57,7 @@ namespace MagicDish.Web.Controllers
             var unitsOfMeasure = Enum.GetNames(typeof(UnitOfMeasure)).ToList();
 
             model.ProductCategoriesDropdown = new SelectList(productCategories);
-            model.ProductsDropdown = new SelectList(new List<string> {"Please Select"});
+            model.ProductsDropdown = new SelectList(new List<string> {});
             model.UnitsOfMeasureDropdown = new SelectList(unitsOfMeasure);
 
             return View(model);

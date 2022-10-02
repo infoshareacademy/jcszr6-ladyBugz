@@ -7,17 +7,19 @@
         </div>
         <div class="m-3">
             <label asp-for="ProductCategory"></label>
-            <select asp-for="ProductCategory" asp-items="Model.ProductCategoriesDropdown"></select>
+            <select asp-for="ProductCategory" asp-items="@Model.ProductCategoriesDropdown" class="form-control">
+            </select>
         </div>
-        <div class="m-3">
+        <div class="m-3" style="display: none" id="ProductNameDiv">
             <label asp-for="ProductName"></label>
-            <select asp-for="ProductName" asp-items="Model.ProductsDropdown"></select>
+            <select asp-for="ProductName" asp-items="Model.ProductsDropdown">
+            </select>
         </div>
-        <div class="m-3">
+        <div class="m-3" style="display: none"  id="AmountDiv">
             <label asp-for="Amount"></label>
             <input asp-for="Amount" class="form-control" />
         </div>
-        <div class="m-3">
+        <div class="m-3" style="display: none"  id="UnitOfMeasureDiv">
             <label asp-for="UnitOfMeasure"></label>
             <select asp-for="UnitOfMeasure" asp-items="Model.UnitsOfMeasureDropdown"></select>
         </div>
@@ -32,18 +34,29 @@
 
 <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript">
+    $("#ProductCategory").append("<option selected disabled>--- SELECT ---</option>");
+
     $("#ProductCategory").change(function(){
         var value = $(this).val();
+
+        $("#ProductNameDiv").css("display", "block");
+
         $.post("@Url.Action("SetDropdownList")", { value: value }, function (data) {
             PopulateDropDown("#ProductName", data);
         })
     })
-        function PopulateDropDown(dropDownId, list) {
-            $(dropDownId).empty();
-            $(dropDownId).append("<option>Please select</option>")
-            $.each(list, function (index, row) {
-                $(dropDownId).append("<option>" + row + "</option>")
-            });
-        }
+
+    $("#ProductName").change(function(){
+        $("#AmountDiv").css("display", "block");
+        $("#UnitOfMeasureDiv").css("display", "block");
+    })
+
+    function PopulateDropDown(dropDownId, list) {
+        $(dropDownId).empty();
+        $(dropDownId).append("<option selected disabled>--- SELECT ---</option>");
+        $.each(list, function (index, row) {
+            $(dropDownId).append("<option>" + row + "</option>");
+        });
+    }
 
 </script>
