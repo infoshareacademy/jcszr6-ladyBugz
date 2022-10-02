@@ -7,11 +7,11 @@
         </div>
         <div class="m-3">
             <label asp-for="ProductCategory"></label>
-            <input asp-for="ProductCategory" class="form-control" />
+            <select asp-for="ProductCategory" asp-items="Model.ProductCategoriesDropdown"></select>
         </div>
         <div class="m-3">
-            <label asp-for="Name"></label>
-            <input asp-for="Name" class="form-control" />
+            <label asp-for="ProductName"></label>
+            <select asp-for="ProductName" asp-items="Model.ProductsDropdown"></select>
         </div>
         <div class="m-3">
             <label asp-for="Amount"></label>
@@ -19,7 +19,7 @@
         </div>
         <div class="m-3">
             <label asp-for="UnitOfMeasure"></label>
-            <input asp-for="UnitOfMeasure" class="form-control" />
+            <select asp-for="UnitOfMeasure" asp-items="Model.UnitsOfMeasureDropdown"></select>
         </div>
         <br />
         <button type="submit" class="btn btn-primary" style="width:200px">Add Product</button>
@@ -28,3 +28,22 @@
         </a>
     </div>
 </form>
+
+
+<script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+    $("#ProductCategory").change(function(){
+        var value = $(this).val();
+        $.post("@Url.Action("SetDropdownList")", { value: value }, function (data) {
+            PopulateDropDown("#ProductName", data);
+        })
+    })
+        function PopulateDropDown(dropDownId, list) {
+            $(dropDownId).empty();
+            $(dropDownId).append("<option>Please select</option>")
+            $.each(list, function (index, row) {
+                $(dropDownId).append("<option>" + row + "</option>")
+            });
+        }
+
+</script>

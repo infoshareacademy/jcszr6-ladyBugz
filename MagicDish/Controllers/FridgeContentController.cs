@@ -3,6 +3,7 @@ using MagicDish.Persistance.Data;
 using MagicDish.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MagicDish.Web.Controllers
 {
@@ -20,6 +21,7 @@ namespace MagicDish.Web.Controllers
             var fridgeProducts = _context.FridgeProducts;
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+
             List<FridgeContentViewModel> fridgeContentList = fridgeProducts.Where(u => u.Fridge.UserId == userId)
                 .Join(availableProducts,
                     f => f.ProductId,
@@ -34,12 +36,12 @@ namespace MagicDish.Web.Controllers
                 .Select(f => new FridgeContentViewModel
                 {
                     ProductCategory = f.ProductCategory,
-                    Name = f.Name,
+                    ProductName = f.Name,
                     Amount = f.Amount,
                     UnitOfMeasure = f.UnitOfMeasure,
                     IsVegan = f.IsVegan,
                 })
-                .OrderBy(p => p.Name)
+                .OrderBy(p => p.ProductName)
                 .ToList();
 
             return View(fridgeContentList);
@@ -48,7 +50,27 @@ namespace MagicDish.Web.Controllers
         //GET
         public IActionResult Create()
         {
-            return View();
+            FridgeContentViewModel model = new FridgeContentViewModel();
+
+            var productCategories = Enum.GetNames(typeof(ProductCategory)).ToList();
+            var products = _context.AvailableProducts.Select(p => p.Name).ToList();
+            var unitsOfMeasure = Enum.GetNames(typeof(UnitOfMeasure)).ToList();
+
+            model.ProductCategoriesDropdown = new SelectList(productCategories);
+            model.ProductsDropdown = new SelectList(new List<string> {"Please Select"});
+            model.UnitsOfMeasureDropdown = new SelectList(unitsOfMeasure);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public JsonResult SetDropdownList(string value)
+        {
+            var availableProducts = _context.AvailableProducts;
+            var enumValue = (ProductCategory)Enum.Parse(typeof(ProductCategory), value);
+            var productsList = availableProducts.Where(p => p.ProductCategory == enumValue).Select(p => p.Name).ToList();
+
+            return Json(productsList);
         }
 
         //POST
@@ -65,7 +87,7 @@ namespace MagicDish.Web.Controllers
             FridgeProduct fridgeProduct = new FridgeProduct();
             fridgeProduct.Amount = obj.Amount;
             fridgeProduct.FridgeId = fridges.Where(u => u.UserId == userId).FirstOrDefault().Id;
-            fridgeProduct.ProductId = availableProducts.Where(p => p.Name == obj.Name).FirstOrDefault().Id;
+            fridgeProduct.ProductId = availableProducts.Where(p => p.Name == obj.ProductName).FirstOrDefault().Id;
 
             fridgeProducts.Add(fridgeProduct);
             _context.SaveChanges();
