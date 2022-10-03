@@ -8,18 +8,25 @@
         <div class="m-3">
             <label asp-for="ProductCategory"></label>
             <select asp-for="ProductCategory" asp-items="Model.ProductCategoriesDropdown" class="form-control"></select>
+            <span asp-validation-for="ProductCategory" class="text-danger"></span>
         </div>
         <div class="m-3" style="display: none" id="ProductNameDiv">
             <label asp-for="ProductName"></label>
             <select asp-for="ProductName" asp-items="Model.ProductsDropdown" class="form-control"></select>
+            <span asp-validation-for="ProductName" class="text-danger"></span>
+
         </div>
         <div class="m-3" style="display: none" id="AmountDiv">
             <label asp-for="Amount"></label>
             <input asp-for="Amount" class="form-control" />
+            <span asp-validation-for="Amount" class="text-danger"></span>
+
         </div>
         <div class="m-3" style="display: none"  id="UnitDiv">
             <label asp-for="Unit"></label>
             <input asp-for="Unit" asp-items="Model.UnitsOfMeasureDropdown" class="form-control" readonly/>
+            <span asp-validation-for="Unit" class="text-danger"></span>
+
         </div>
         <br />
         <button type="submit" class="btn btn-primary" style="width:200px">Add Product</button>
@@ -28,6 +35,12 @@
         </a>
     </div>
 </form>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial"/>
+    }
+}
 
 
 <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -40,7 +53,7 @@
         $("#ProductNameDiv").css("display", "block");
 
         $.post("@Url.Action("SetDropdownList")", { value: value }, function (data) {
-            PopulateDropDown("#ProductName", data);
+            PopulateProductDropDown("#ProductName", data);
         })
     })
 
@@ -55,7 +68,7 @@
         })
     })
 
-    function PopulateDropDown(dropDownId, list) {
+    function PopulateProductDropDown(dropDownId, list) {
         $(dropDownId).empty();
         $(dropDownId).append("<option selected disabled>--- SELECT ---</option>");
         $.each(list, function (index, row) {
@@ -68,3 +81,4 @@
         $(fieldId).val(string);
     }
 </script>
+

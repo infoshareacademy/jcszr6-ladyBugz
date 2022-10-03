@@ -4,6 +4,8 @@ using MagicDish.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace MagicDish.Web.Controllers
 {
@@ -69,12 +71,7 @@ namespace MagicDish.Web.Controllers
         {
             var availableProducts = _context.AvailableProducts;
             var units = _context.Units;
-
             var productsList = availableProducts.Where(p => p.ProductCategory.CategoryName == value).Select(p => p.Name).ToList();
-
-            //var enumValue = (ProductCategory)Enum.Parse(typeof(ProductCategory), value);
-            //var productsList = availableProducts.Where(p => p.ProductCategory == enumValue).Select(p => p.Name).ToList();
-
             return Json(productsList);
         }
 
@@ -82,9 +79,7 @@ namespace MagicDish.Web.Controllers
         public JsonResult SetUnit(string value)
         {
             var availableProducts = _context.AvailableProducts;
-
             var unit = availableProducts.Where(p => p.Name == value).Select(p => p.Unit.UnitName).FirstOrDefault().ToString();
-            //var unit = availableProducts.Where(p => p.Name == value).Select(p => p.Unit).FirstOrDefault().ToString();
             return Json(unit);
         }
 
@@ -93,16 +88,16 @@ namespace MagicDish.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(FridgeContentViewModel obj)
         {
+            FridgeProduct fridgeProduct = new FridgeProduct();
+
             var availableProducts = _context.AvailableProducts;
             var fridgeProducts = _context.FridgeProducts;
             var fridges = _context.Fridges;
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-
-            FridgeProduct fridgeProduct = new FridgeProduct();
             fridgeProduct.Amount = obj.Amount;
-            fridgeProduct.FridgeId = fridges.Where(u => u.UserId == userId).FirstOrDefault().Id;
-            fridgeProduct.ProductId = availableProducts.Where(p => p.Name == obj.ProductName).FirstOrDefault().Id;
+            fridgeProduct.FridgeId = fridges.Where(u => u.UserId == userId).First().Id;
+            fridgeProduct.ProductId = availableProducts.Where(p => p.Name == obj.ProductName).First().Id;
 
             fridgeProducts.Add(fridgeProduct);
             _context.SaveChanges();
