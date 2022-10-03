@@ -19,7 +19,7 @@
         </div>
         <div class="m-3" style="display: none"  id="UnitOfMeasureDiv">
             <label asp-for="UnitOfMeasure"></label>
-            <input asp-for="UnitOfMeasure" asp-items="Model.UnitsOfMeasureDropdown" class="form-control"></input>
+            <input asp-for="UnitOfMeasure" asp-items="Model.UnitsOfMeasureDropdown" class="form-control" readonly/>
         </div>
         <br />
         <button type="submit" class="btn btn-primary" style="width:200px">Add Product</button>
@@ -50,11 +50,10 @@
         $("#AmountDiv").css("display", "block");
         $("#UnitOfMeasureDiv").css("display", "block");
         
-        $.post("@Url.Action("SetUnitOfMeasure")", { value: value1 }, function (data) {
-            PopulateUnitField("#UnitOfMeasure", data);
+        $.post("@Url.Action("SetUnitOfMeasure")", { value: value1 }, function (data1) {
+            PopulateUnitField("#UnitOfMeasure", data1);
         })
     })
-
 
     function PopulateDropDown(dropDownId, list) {
         $(dropDownId).empty();
@@ -64,9 +63,8 @@
         });
     }
 
-    
     function PopulateUnitField(fieldId, string) {
         $(fieldId).empty();
-        $(fieldId).append("<option>" + string + "</option>");
+        $(fieldId).val(string);
     }
 </script>
