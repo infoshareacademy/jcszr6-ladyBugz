@@ -49,19 +49,16 @@ namespace MagicDish.Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AvailableProducts",
+                name: "ProductCategories",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UnitOfMeasure = table.Column<int>(type: "int", nullable: false),
-                    ProductCategory = table.Column<int>(type: "int", nullable: false),
-                    IsVegan = table.Column<bool>(type: "bit", nullable: false)
+                    CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AvailableProducts", x => x.Id);
+                    table.PrimaryKey("PK_ProductCategories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -77,6 +74,19 @@ namespace MagicDish.Persistance.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Recipes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Units",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UnitName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Units", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -205,28 +215,29 @@ namespace MagicDish.Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Ingridients",
+                name: "AvailableProducts",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    RecipeId = table.Column<int>(type: "int", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProductCategoryId = table.Column<int>(type: "int", nullable: false),
+                    UnitId = table.Column<int>(type: "int", nullable: false),
+                    IsVegan = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ingridients", x => x.Id);
+                    table.PrimaryKey("PK_AvailableProducts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Ingridients_AvailableProducts_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "AvailableProducts",
+                        name: "FK_AvailableProducts_ProductCategories_ProductCategoryId",
+                        column: x => x.ProductCategoryId,
+                        principalTable: "ProductCategories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Ingridients_Recipes_RecipeId",
-                        column: x => x.RecipeId,
-                        principalTable: "Recipes",
+                        name: "FK_AvailableProducts_Units_UnitId",
+                        column: x => x.UnitId,
+                        principalTable: "Units",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -254,6 +265,33 @@ namespace MagicDish.Persistance.Migrations
                         name: "FK_FridgeProducts_Fridges_FridgeId",
                         column: x => x.FridgeId,
                         principalTable: "Fridges",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Ingridients",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    RecipeId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ingridients", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Ingridients_AvailableProducts_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "AvailableProducts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Ingridients_Recipes_RecipeId",
+                        column: x => x.RecipeId,
+                        principalTable: "Recipes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -296,6 +334,16 @@ namespace MagicDish.Persistance.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AvailableProducts_ProductCategoryId",
+                table: "AvailableProducts",
+                column: "ProductCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AvailableProducts_UnitId",
+                table: "AvailableProducts",
+                column: "UnitId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FridgeProducts_FridgeId",
@@ -360,6 +408,12 @@ namespace MagicDish.Persistance.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "ProductCategories");
+
+            migrationBuilder.DropTable(
+                name: "Units");
         }
     }
 }

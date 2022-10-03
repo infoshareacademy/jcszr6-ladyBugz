@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MagicDish.Persistance.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220930174141_Start")]
+    [Migration("20221003220019_Start")]
     partial class Start
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -103,22 +103,43 @@ namespace MagicDish.Persistance.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<bool>("IsVegan")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProductCategory")
+                    b.Property<int>("ProductCategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UnitOfMeasure")
+                    b.Property<int>("UnitId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsVegan")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ProductCategoryId");
+
+                    b.HasIndex("UnitId");
+
                     b.ToTable("AvailableProducts");
+                });
+
+            modelBuilder.Entity("MagicDish.Core.Models.ProductCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductCategories");
                 });
 
             modelBuilder.Entity("MagicDish.Core.Models.Recipe", b =>
@@ -143,6 +164,23 @@ namespace MagicDish.Persistance.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Recipes");
+                });
+
+            modelBuilder.Entity("MagicDish.Core.Models.Unit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("UnitName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Units");
                 });
 
             modelBuilder.Entity("MagicDish.Core.Models.User", b =>
@@ -392,6 +430,25 @@ namespace MagicDish.Persistance.Migrations
                         .IsRequired();
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("MagicDish.Core.Models.Product", b =>
+                {
+                    b.HasOne("MagicDish.Core.Models.ProductCategory", "ProductCategory")
+                        .WithMany()
+                        .HasForeignKey("ProductCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MagicDish.Core.Models.Unit", "Unit")
+                        .WithMany()
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProductCategory");
+
+                    b.Navigation("Unit");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

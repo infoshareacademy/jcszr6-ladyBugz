@@ -20,6 +20,7 @@ namespace MagicDish.Web.Controllers
             var availableProducts = _context.AvailableProducts;
             var fridgeProducts = _context.FridgeProducts;
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var users = _context.Users;
 
 
             List<FridgeContentViewModel> fridgeContentList = fridgeProducts.Where(u => u.Fridge.UserId == userId)
@@ -28,17 +29,17 @@ namespace MagicDish.Web.Controllers
                     p => p.Id, (f, p) => new
                     {
                         p.Name,
-                        p.UnitOfMeasure,
-                        p.ProductCategory,
+                        p.Unit.UnitName,
+                        p.ProductCategory.CategoryName,
                         p.IsVegan,
                         f.Amount,
                     })
                 .Select(f => new FridgeContentViewModel
                 {
-                    ProductCategory = f.ProductCategory,
+                    ProductCategory = f.CategoryName,
                     ProductName = f.Name,
                     Amount = f.Amount,
-                    UnitOfMeasure = f.UnitOfMeasure,
+                    Unit = f.UnitName,
                     IsVegan = f.IsVegan,
                 })
                 .OrderBy(p => p.ProductName)
@@ -52,13 +53,13 @@ namespace MagicDish.Web.Controllers
         {
             FridgeContentViewModel model = new FridgeContentViewModel();
 
-            var productCategories = Enum.GetNames(typeof(ProductCategory)).ToList();
+            var productCategories = _context.ProductCategories.Select(c => c.CategoryName).ToList();
             var products = _context.AvailableProducts.Select(p => p.Name).ToList();
-            var unitsOfMeasure = Enum.GetNames(typeof(UnitOfMeasure)).ToList();
+            var units = _context.Units.Select(u => u.UnitName).ToList();
 
             model.ProductCategoriesDropdown = new SelectList(productCategories);
             model.ProductsDropdown = new SelectList(new List<string> {});
-            model.UnitsOfMeasureDropdown = new SelectList(unitsOfMeasure);
+            model.UnitsOfMeasureDropdown = new SelectList(units);
 
             return View(model);
         }
@@ -67,18 +68,24 @@ namespace MagicDish.Web.Controllers
         public JsonResult SetDropdownList(string value)
         {
             var availableProducts = _context.AvailableProducts;
-            var enumValue = (ProductCategory)Enum.Parse(typeof(ProductCategory), value);
-            var productsList = availableProducts.Where(p => p.ProductCategory == enumValue).Select(p => p.Name).ToList();
+            var units = _context.Units;
+
+            var productsList = availableProducts.Where(p => p.ProductCategory.CategoryName == value).Select(p => p.Name).ToList();
+
+            //var enumValue = (ProductCategory)Enum.Parse(typeof(ProductCategory), value);
+            //var productsList = availableProducts.Where(p => p.ProductCategory == enumValue).Select(p => p.Name).ToList();
 
             return Json(productsList);
         }
 
         [HttpPost]
-        public JsonResult SetUnitOfMeasure(string value)
+        public JsonResult SetUnit(string value)
         {
             var availableProducts = _context.AvailableProducts;
-            var unitOfMeasure = availableProducts.Where(p => p.Name == value).Select(p => p.UnitOfMeasure).FirstOrDefault().ToString();
-            return Json(unitOfMeasure);
+
+            var unit = availableProducts.Where(p => p.Name == value).Select(p => p.Unit.UnitName).FirstOrDefault().ToString();
+            //var unit = availableProducts.Where(p => p.Name == value).Select(p => p.Unit).FirstOrDefault().ToString();
+            return Json(unit);
         }
 
         //POST
