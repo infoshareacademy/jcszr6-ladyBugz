@@ -154,9 +154,6 @@ namespace MagicDish.Web.Controllers
             //fridgeProduct.Product = availableProducts.Where(p => p.Name == obj.ProductName).First();
             fridgeProduct.ProductId = availableProducts.Where(p => p.Name == obj.ProductName).First().Id;
 
-
-
-
             fridgeProducts.Update(fridgeProduct);
             _context.SaveChanges();
             TempData["success"] = "Amount updated successfully";
