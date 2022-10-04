@@ -6,6 +6,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using System.Runtime.Remoting;
 
 namespace MagicDish.Web.Controllers
 {
@@ -110,21 +111,27 @@ namespace MagicDish.Web.Controllers
             if (productName == null)
             {
                 return NotFound();
-;           }
+            }
 
-            var productFromDb = _context.FridgeProducts.FirstOrDefault(p => p.Product.Name == productName);
+            var availableProducts = _context.AvailableProducts;
+            var fridgeProducts = _context.FridgeProducts;
+            var fridges = _context.Fridges;
 
-            if (productFromDb == null)
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var fridgeId = fridges.Where(u => u.UserId == userId).First().Id;
+            var fridgeProduct = fridgeProducts.Where(u => u.FridgeId == fridgeId).Where(p => p.Product.Name == productName).FirstOrDefault();
+
+
+            if (fridgeProduct == null)
             {
                 return NotFound();
             }
 
             FridgeProductViewModel product = new FridgeProductViewModel();
-            var availableProducts = _context.AvailableProducts;
 
             product.ProductName = productName;
             product.ProductCategory = availableProducts.Where(c => c.Name == productName).Select(c => c.ProductCategory.CategoryName).FirstOrDefault();
-            product.Amount = productFromDb.Amount;
+            product.Amount = fridgeProduct.Amount;
             product.Unit = availableProducts.Where(c => c.Name == productName).Select(c => c.Unit.UnitName).FirstOrDefault();
 
 
@@ -134,19 +141,28 @@ namespace MagicDish.Web.Controllers
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(FridgeProductViewModel obj)
+        public IActionResult Edit(FridgeProductViewModel obj)
         {
             var availableProducts = _context.AvailableProducts;
             var fridgeProducts = _context.FridgeProducts;
             var fridges = _context.Fridges;
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var fridgeProduct = fridgeProducts.Where(p => p.Product.Name == obj.ProductName).First();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var fridgeId = fridges.Where(u => u.UserId == userId).First().Id;
+            var productName = availableProducts.Where(p => p.Name == obj.ProductName).First().Name;
+
+
+            var fridgeProduct = fridgeProducts.Where(u => u.FridgeId == fridgeId).Where(p => p.Product.Name == obj.ProductName).FirstOrDefault();
+            if (fridgeProduct == null)
+            {
+                return NotFound();
+           
+            }
             fridgeProduct.Amount = obj.Amount;
 
 
             fridgeProducts.Update(fridgeProduct);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
             TempData["success"] = "Amount updated successfully";
             return RedirectToAction("Index");
         }
