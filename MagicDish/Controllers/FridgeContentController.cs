@@ -103,5 +103,32 @@ namespace MagicDish.Web.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        //GET
+        public IActionResult Edit(string? productName)
+        {
+            if (productName == null)
+            {
+                return NotFound();
+;           }
+
+            var productFromDb = _context.FridgeProducts.FirstOrDefault(p => p.Product.Name == productName);
+
+            if (productFromDb == null)
+            {
+                return NotFound();
+            }
+
+            FridgeProductViewModel product = new FridgeProductViewModel();
+            var availableProducts = _context.AvailableProducts;
+
+            product.ProductName = productName;
+            product.ProductCategory = availableProducts.Where(c => c.Name == productName).Select(c => c.ProductCategory.CategoryName).FirstOrDefault();
+            product.Amount = productFromDb.Amount;
+            product.Unit = availableProducts.Where(c => c.Name == productName).Select(c => c.Unit.UnitName).FirstOrDefault();
+
+
+            return View(product);
+        }
     }
 }

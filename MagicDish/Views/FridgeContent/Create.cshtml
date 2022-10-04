@@ -5,6 +5,7 @@
         <div class="row pb-2">
             <h2 class="text-primary">Add new product to your fridge</h2>
         </div>
+        <div asp-validation-summary="All"></div>
         <div class="m-3">
             <label asp-for="ProductCategory"></label>
             <select asp-for="ProductCategory" asp-items="Model.ProductCategoriesDropdown" class="form-control"></select>
