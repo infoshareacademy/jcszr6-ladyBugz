@@ -130,5 +130,37 @@ namespace MagicDish.Web.Controllers
 
             return View(product);
         }
+
+        //POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(FridgeProductViewModel obj)
+        {
+            FridgeProduct fridgeProduct = new FridgeProduct();
+
+            var availableProducts = _context.AvailableProducts;
+            var fridgeProducts = _context.FridgeProducts;
+            var fridges = _context.Fridges;
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            //fridgeProduct.Amount = obj.Amount;
+            //fridgeProduct.FridgeId = fridges.Where(u => u.UserId == userId).First().Id;
+            //fridgeProduct.ProductId = availableProducts.Where(p => p.Name == obj.ProductName).First().Id;
+
+            fridgeProduct.Id = fridgeProducts.Where(p => p.Product.Name == obj.ProductName).First().Id;
+            fridgeProduct.Amount = obj.Amount;
+            //fridgeProduct.Fridge = fridges.Where(u => u.UserId == userId).First();
+            fridgeProduct.FridgeId = fridges.Where(u => u.UserId == userId).First().Id;
+            //fridgeProduct.Product = availableProducts.Where(p => p.Name == obj.ProductName).First();
+            fridgeProduct.ProductId = availableProducts.Where(p => p.Name == obj.ProductName).First().Id;
+
+
+
+
+            fridgeProducts.Update(fridgeProduct);
+            _context.SaveChanges();
+            TempData["success"] = "Amount updated successfully";
+            return RedirectToAction("Index");
+        }
     }
 }
