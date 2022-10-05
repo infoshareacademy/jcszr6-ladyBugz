@@ -1,6 +1,7 @@
 ﻿@model MagicDish.Web.ViewModels.FridgeProductViewModel
 
 <form method="post" asp-action="Edit">
+    <input asp-for="ProductName" asp-items="Model.ProductName" hidden />
     <div>
         <div class="row pb-2">
             <h2 class="text-primary">Edit the amount of the product</h2>
@@ -8,11 +9,11 @@
         <div asp-validation-summary="All"></div>
         <div class="m-3">
             <label asp-for="ProductCategory"></label>
-            <input asp-for="ProductCategory" asp-items="Model.ProductCategory" class="form-control" readonly />
+            <input asp-for="ProductCategory" disabled asp-items="Model.ProductCategory" class="form-control" />
         </div>
         <div class="m-3" id="ProductNameDiv">
             <label asp-for="ProductName"></label>
-            <input asp-for="ProductName" asp-items="Model.ProductName" class="form-control" readonly />
+            <input asp-for="ProductName" disabled asp-items="Model.ProductName" class="form-control" />
         </div>
         <div class="m-3" id="AmountDiv">
             <label asp-for="Amount"></label>
@@ -21,8 +22,7 @@
         </div>
         <div class="m-3" id="UnitDiv">
             <label asp-for="Unit"></label>
-            <input asp-for="Unit" asp-items="Model.Unit" class="form-control" readonly />
-            <span asp-validation-for="Unit" class="text-danger"></span>
+            <input asp-for="Unit" disabled asp-items="Model.Unit" class="form-control" />
         </div>
         <br />
         <button type="submit" class="btn btn-primary" style="width:200px">Save</button>

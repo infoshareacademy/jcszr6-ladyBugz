@@ -166,6 +166,68 @@ namespace MagicDish.Web.Controllers
             TempData["success"] = "Amount updated successfully";
             return RedirectToAction("Index");
         }
+
+        //GET
+        public IActionResult Delete(string? productName)
+        {
+            if (productName == null)
+            {
+                return NotFound();
+            }
+
+            var availableProducts = _context.AvailableProducts;
+            var fridgeProducts = _context.FridgeProducts;
+            var fridges = _context.Fridges;
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var fridgeId = fridges.Where(u => u.UserId == userId).First().Id;
+            var fridgeProduct = fridgeProducts.Where(u => u.FridgeId == fridgeId).Where(p => p.Product.Name == productName).FirstOrDefault();
+
+
+            if (fridgeProduct == null)
+            {
+                return NotFound();
+            }
+
+            FridgeProductViewModel product = new FridgeProductViewModel();
+
+            product.ProductName = productName;
+            product.ProductCategory = availableProducts.Where(c => c.Name == productName).Select(c => c.ProductCategory.CategoryName).FirstOrDefault();
+            product.Amount = fridgeProduct.Amount;
+            product.Unit = availableProducts.Where(c => c.Name == productName).Select(c => c.Unit.UnitName).FirstOrDefault();
+
+
+            return View(product);
+        }
+
+        //POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(FridgeProductViewModel obj)
+        {
+            var availableProducts = _context.AvailableProducts;
+            var fridgeProducts = _context.FridgeProducts;
+            var fridges = _context.Fridges;
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var fridgeId = fridges.Where(u => u.UserId == userId).First().Id;
+            var productName = availableProducts.Where(p => p.Name == obj.ProductName).First().Name;
+
+
+            var fridgeProduct = fridgeProducts.Where(u => u.FridgeId == fridgeId).Where(p => p.Product.Name == obj.ProductName).FirstOrDefault();
+            if (fridgeProduct == null)
+            {
+                return NotFound();
+
+            }
+            fridgeProduct.Amount = obj.Amount;
+
+
+            fridgeProducts.Remove(fridgeProduct);
+            _context.SaveChanges();
+            TempData["success"] = "Amount updated successfully";
+            return RedirectToAction("Index");
+        }
     }
 }
 
