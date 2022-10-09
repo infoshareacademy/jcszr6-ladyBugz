@@ -18,6 +18,9 @@
     <thead>
         <tr>
             <th>
+                Id
+            </th>
+            <th>
                 Food Category
             </th>
             <th>
@@ -37,9 +40,12 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var prod in Model)
+        @foreach (var prod in Model)
         {
             <tr>
+                <td width="18%">
+                    @prod.Id
+                </td>
                 <td width="18%">
                     @prod.ProductCategory
                 </td>
@@ -49,8 +55,8 @@
                 <td width="18%">
                     @prod.Amount
                     <div class="w-75 btn-group" role="group">
-                        <a asp-controller="FridgeContent" asp-action="Edit" asp-route-productName="@prod.ProductName"><i class="bi bi-pencil-square"></i> Edit</a>
-                    </div> 
+                        <a asp-controller="FridgeContent" asp-action="Edit" asp-route-Id="@prod.Id"><i class="bi bi-pencil-square"></i> Edit</a>
+                    </div>
                 </td>
                 <td width="18%">
                     @prod.Unit
@@ -59,7 +65,7 @@
                     @prod.IsVegan
                 </td>
                 <td width="10%">
-                    <a asp-controller="FridgeContent" asp-action="Delete" asp-route-productName="@prod.ProductName"><i class="bi bi-trash"></i> Delete</a>
+                    <a asp-controller="FridgeContent" asp-action="Delete" asp-route-Id="@prod.Id"><i class="bi bi-trash"></i> Delete</a>
                 </td>
             </tr>
         }

@@ -1,5 +1,12 @@
 ﻿@model MagicDish.Web.ViewModels.FridgeProductViewModel
 
+@if (TempData["Message"] != null)
+{          
+    <div class="alert alert-info" role="alert">
+        @Html.Raw(String.Join("<br />", TempData["Message"] as string))
+    </div>
+}
+
 <form method="post" asp-action="Edit">
     <input asp-for="ProductName" asp-items="Model.ProductName" hidden />
     <div>
@@ -26,7 +33,7 @@
         </div>
         <br />
         <button type="submit" class="btn btn-primary" style="width:200px">Save</button>
-        <a asp-controller="FridgeContent" asp-action="Edit" class="btn btn-secondary" style="width:200px">
+        <a asp-controller="FridgeContent" asp-action="Index" class="btn btn-secondary" style="width:200px">
             Back to your fridge
         </a>
     </div>
@@ -34,7 +41,7 @@
 
 @section Scripts{
     @{
-        <partial name="_ValidationScriptsPartial"/>
+        <partial name="_ValidationScriptsPartial" />
     }
-}
+    }
 

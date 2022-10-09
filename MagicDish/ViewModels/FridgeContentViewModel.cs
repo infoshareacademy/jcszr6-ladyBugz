@@ -7,6 +7,8 @@ namespace MagicDish.Web.ViewModels
 {
     public class FridgeContentViewModel
     {
+        public int Id { get; set; }
+
         [Required(ErrorMessage = "Please select the product category")]
         [DisplayName("Product Category")]
         public string ProductCategory { get; set; }
@@ -16,7 +18,7 @@ namespace MagicDish.Web.ViewModels
         public string ProductName { get; set; }
 
         [Required(ErrorMessage = "Please enter a valid amount")]
-        [Range(1, 10000,ErrorMessage = "The amount value has to be an integer between 1 and 10000")]
+        [Range(1, 10000, ErrorMessage = "The amount value has to be an integer between 0 and 10000")]
         public int Amount { get; set; }
 
         [Required]
