@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MagicDish.Core.Models
 {
     public class Fridge
     {
+        [Key]
         public int Id { get; set; }
 
-        public string Name { get; set; }
+        public IList<FridgeProduct> Products { get; set; }
 
-        public IList<ProductQuantity> Products { get; set; }
+        public string UserId { get; set; }
 
-        public int UserId { get; set; }
+        [ForeignKey("UserId")]
+        public User User { get; set; }  
     }
 }

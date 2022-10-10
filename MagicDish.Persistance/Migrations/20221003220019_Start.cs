@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MagicDish.Persistance.Migrations
 {
-    public partial class start : Migration
+    public partial class Start : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,33 +49,44 @@ namespace MagicDish.Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Fridges",
+                name: "ProductCategories",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Fridges", x => x.Id);
+                    table.PrimaryKey("PK_ProductCategories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Recipe",
+                name: "Recipes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CookingTimeInMinutes = table.Column<int>(type: "int", nullable: false),
-                    IsVegeterian = table.Column<bool>(type: "bit", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Recipe", x => x.Id);
+                    table.PrimaryKey("PK_Recipes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Units",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UnitName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Units", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -185,32 +196,104 @@ namespace MagicDish.Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Fridges",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Fridges", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Fridges_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AvailableProducts",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UnitOfMeasure = table.Column<int>(type: "int", nullable: false),
-                    ProductCategory = table.Column<int>(type: "int", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RecipeId = table.Column<int>(type: "int", nullable: true),
-                    Quantity = table.Column<int>(type: "int", nullable: true),
-                    FridgeId = table.Column<int>(type: "int", nullable: true)
+                    ProductCategoryId = table.Column<int>(type: "int", nullable: false),
+                    UnitId = table.Column<int>(type: "int", nullable: false),
+                    IsVegan = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AvailableProducts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AvailableProducts_Fridges_FridgeId",
+                        name: "FK_AvailableProducts_ProductCategories_ProductCategoryId",
+                        column: x => x.ProductCategoryId,
+                        principalTable: "ProductCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AvailableProducts_Units_UnitId",
+                        column: x => x.UnitId,
+                        principalTable: "Units",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FridgeProducts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Amount = table.Column<int>(type: "int", nullable: false),
+                    FridgeId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FridgeProducts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FridgeProducts_AvailableProducts_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "AvailableProducts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FridgeProducts_Fridges_FridgeId",
                         column: x => x.FridgeId,
                         principalTable: "Fridges",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Ingridients",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    RecipeId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ingridients", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AvailableProducts_Recipe_RecipeId",
+                        name: "FK_Ingridients_AvailableProducts_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "AvailableProducts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Ingridients_Recipes_RecipeId",
                         column: x => x.RecipeId,
-                        principalTable: "Recipe",
-                        principalColumn: "Id");
+                        principalTable: "Recipes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -253,13 +336,38 @@ namespace MagicDish.Persistance.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AvailableProducts_FridgeId",
+                name: "IX_AvailableProducts_ProductCategoryId",
                 table: "AvailableProducts",
+                column: "ProductCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AvailableProducts_UnitId",
+                table: "AvailableProducts",
+                column: "UnitId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FridgeProducts_FridgeId",
+                table: "FridgeProducts",
                 column: "FridgeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AvailableProducts_RecipeId",
-                table: "AvailableProducts",
+                name: "IX_FridgeProducts_ProductId",
+                table: "FridgeProducts",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Fridges_UserId",
+                table: "Fridges",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ingridients_ProductId",
+                table: "Ingridients",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ingridients_RecipeId",
+                table: "Ingridients",
                 column: "RecipeId");
         }
 
@@ -281,19 +389,31 @@ namespace MagicDish.Persistance.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "AvailableProducts");
+                name: "FridgeProducts");
+
+            migrationBuilder.DropTable(
+                name: "Ingridients");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Fridges");
 
             migrationBuilder.DropTable(
-                name: "Recipe");
+                name: "AvailableProducts");
+
+            migrationBuilder.DropTable(
+                name: "Recipes");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "ProductCategories");
+
+            migrationBuilder.DropTable(
+                name: "Units");
         }
     }
 }

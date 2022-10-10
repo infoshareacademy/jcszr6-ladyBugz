@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MagicDish.Persistance.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220922173154_start")]
-    partial class start
+    [Migration("20221004193341_SeedData")]
+    partial class SeedData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,16 +32,67 @@ namespace MagicDish.Persistance.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Name")
+                    b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("UserId")
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Fridges");
+                });
+
+            modelBuilder.Entity("MagicDish.Core.Models.FridgeProduct", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FridgeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Fridges");
+                    b.HasIndex("FridgeId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("FridgeProducts");
+                });
+
+            modelBuilder.Entity("MagicDish.Core.Models.Ingridient", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RecipeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("RecipeId");
+
+                    b.ToTable("Ingridients");
                 });
 
             modelBuilder.Entity("MagicDish.Core.Models.Product", b =>
@@ -52,30 +103,181 @@ namespace MagicDish.Persistance.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("IsVegan")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProductCategory")
+                    b.Property<int>("ProductCategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RecipeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UnitOfMeasure")
+                    b.Property<int>("UnitId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RecipeId");
+                    b.HasIndex("ProductCategoryId");
 
-                    b.ToTable("AvailableProducts");
+                    b.HasIndex("UnitId");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Product");
+                    b.ToTable("AvailableProducts", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            IsVegan = false,
+                            Name = "Tomato",
+                            ProductCategoryId = 1,
+                            UnitId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            IsVegan = false,
+                            Name = "Potato",
+                            ProductCategoryId = 1,
+                            UnitId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            IsVegan = false,
+                            Name = "Carrot",
+                            ProductCategoryId = 1,
+                            UnitId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            IsVegan = false,
+                            Name = "Apple",
+                            ProductCategoryId = 2,
+                            UnitId = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            IsVegan = false,
+                            Name = "Lemon",
+                            ProductCategoryId = 2,
+                            UnitId = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            IsVegan = false,
+                            Name = "Cheese",
+                            ProductCategoryId = 3,
+                            UnitId = 1
+                        },
+                        new
+                        {
+                            Id = 7,
+                            IsVegan = false,
+                            Name = "Milk",
+                            ProductCategoryId = 3,
+                            UnitId = 2
+                        },
+                        new
+                        {
+                            Id = 8,
+                            IsVegan = false,
+                            Name = "Flour",
+                            ProductCategoryId = 4,
+                            UnitId = 1
+                        },
+                        new
+                        {
+                            Id = 9,
+                            IsVegan = false,
+                            Name = "Pasta",
+                            ProductCategoryId = 4,
+                            UnitId = 1
+                        },
+                        new
+                        {
+                            Id = 10,
+                            IsVegan = false,
+                            Name = "Olive oil",
+                            ProductCategoryId = 5,
+                            UnitId = 1
+                        },
+                        new
+                        {
+                            Id = 11,
+                            IsVegan = false,
+                            Name = "Butter",
+                            ProductCategoryId = 5,
+                            UnitId = 1
+                        },
+                        new
+                        {
+                            Id = 12,
+                            IsVegan = false,
+                            Name = "Salt",
+                            ProductCategoryId = 6,
+                            UnitId = 1
+                        },
+                        new
+                        {
+                            Id = 13,
+                            IsVegan = false,
+                            Name = "Pepper",
+                            ProductCategoryId = 6,
+                            UnitId = 1
+                        });
+                });
+
+            modelBuilder.Entity("MagicDish.Core.Models.ProductCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductCategories", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryName = "Vegetable"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryName = "Fruit"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryName = "Dairy"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CategoryName = "Starch"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CategoryName = "Fat"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CategoryName = "Spices"
+                        });
                 });
 
             modelBuilder.Entity("MagicDish.Core.Models.Recipe", b =>
@@ -93,16 +295,42 @@ namespace MagicDish.Persistance.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsVegeterian")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Recipe");
+                    b.ToTable("Recipes");
+                });
+
+            modelBuilder.Entity("MagicDish.Core.Models.Unit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("UnitName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Units", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            UnitName = "Grams"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            UnitName = "Mililiters"
+                        });
                 });
 
             modelBuilder.Entity("MagicDish.Core.Models.User", b =>
@@ -307,26 +535,70 @@ namespace MagicDish.Persistance.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("MagicDish.Core.Models.ProductQuantity", b =>
+            modelBuilder.Entity("MagicDish.Core.Models.Fridge", b =>
                 {
-                    b.HasBaseType("MagicDish.Core.Models.Product");
+                    b.HasOne("MagicDish.Core.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<int?>("FridgeId")
-                        .HasColumnType("int");
+                    b.Navigation("User");
+                });
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
+            modelBuilder.Entity("MagicDish.Core.Models.FridgeProduct", b =>
+                {
+                    b.HasOne("MagicDish.Core.Models.Fridge", "Fridge")
+                        .WithMany("Products")
+                        .HasForeignKey("FridgeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasIndex("FridgeId");
+                    b.HasOne("MagicDish.Core.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasDiscriminator().HasValue("ProductQuantity");
+                    b.Navigation("Fridge");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("MagicDish.Core.Models.Ingridient", b =>
+                {
+                    b.HasOne("MagicDish.Core.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MagicDish.Core.Models.Recipe", null)
+                        .WithMany("Ingredients")
+                        .HasForeignKey("RecipeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("MagicDish.Core.Models.Product", b =>
                 {
-                    b.HasOne("MagicDish.Core.Models.Recipe", null)
-                        .WithMany("Ingredients")
-                        .HasForeignKey("RecipeId");
+                    b.HasOne("MagicDish.Core.Models.ProductCategory", "ProductCategory")
+                        .WithMany()
+                        .HasForeignKey("ProductCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MagicDish.Core.Models.Unit", "Unit")
+                        .WithMany()
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProductCategory");
+
+                    b.Navigation("Unit");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -378,13 +650,6 @@ namespace MagicDish.Persistance.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("MagicDish.Core.Models.ProductQuantity", b =>
-                {
-                    b.HasOne("MagicDish.Core.Models.Fridge", null)
-                        .WithMany("Products")
-                        .HasForeignKey("FridgeId");
                 });
 
             modelBuilder.Entity("MagicDish.Core.Models.Fridge", b =>

@@ -4,6 +4,7 @@ using MagicDish.Persistance.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MagicDish.Persistance.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221003220019_Start")]
+    partial class Start
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -120,113 +122,7 @@ namespace MagicDish.Persistance.Migrations
 
                     b.HasIndex("UnitId");
 
-                    b.ToTable("AvailableProducts", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            IsVegan = false,
-                            Name = "Tomato",
-                            ProductCategoryId = 1,
-                            UnitId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            IsVegan = false,
-                            Name = "Potato",
-                            ProductCategoryId = 1,
-                            UnitId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            IsVegan = false,
-                            Name = "Carrot",
-                            ProductCategoryId = 1,
-                            UnitId = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            IsVegan = false,
-                            Name = "Apple",
-                            ProductCategoryId = 2,
-                            UnitId = 1
-                        },
-                        new
-                        {
-                            Id = 5,
-                            IsVegan = false,
-                            Name = "Lemon",
-                            ProductCategoryId = 2,
-                            UnitId = 1
-                        },
-                        new
-                        {
-                            Id = 6,
-                            IsVegan = false,
-                            Name = "Cheese",
-                            ProductCategoryId = 3,
-                            UnitId = 1
-                        },
-                        new
-                        {
-                            Id = 7,
-                            IsVegan = false,
-                            Name = "Milk",
-                            ProductCategoryId = 3,
-                            UnitId = 2
-                        },
-                        new
-                        {
-                            Id = 8,
-                            IsVegan = false,
-                            Name = "Flour",
-                            ProductCategoryId = 4,
-                            UnitId = 1
-                        },
-                        new
-                        {
-                            Id = 9,
-                            IsVegan = false,
-                            Name = "Pasta",
-                            ProductCategoryId = 4,
-                            UnitId = 1
-                        },
-                        new
-                        {
-                            Id = 10,
-                            IsVegan = false,
-                            Name = "Olive oil",
-                            ProductCategoryId = 5,
-                            UnitId = 1
-                        },
-                        new
-                        {
-                            Id = 11,
-                            IsVegan = false,
-                            Name = "Butter",
-                            ProductCategoryId = 5,
-                            UnitId = 1
-                        },
-                        new
-                        {
-                            Id = 12,
-                            IsVegan = false,
-                            Name = "Salt",
-                            ProductCategoryId = 6,
-                            UnitId = 1
-                        },
-                        new
-                        {
-                            Id = 13,
-                            IsVegan = false,
-                            Name = "Pepper",
-                            ProductCategoryId = 6,
-                            UnitId = 1
-                        });
+                    b.ToTable("AvailableProducts");
                 });
 
             modelBuilder.Entity("MagicDish.Core.Models.ProductCategory", b =>
@@ -243,39 +139,7 @@ namespace MagicDish.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductCategories", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CategoryName = "Vegetable"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CategoryName = "Fruit"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CategoryName = "Dairy"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CategoryName = "Starch"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CategoryName = "Fat"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CategoryName = "Spices"
-                        });
+                    b.ToTable("ProductCategories");
                 });
 
             modelBuilder.Entity("MagicDish.Core.Models.Recipe", b =>
@@ -316,19 +180,7 @@ namespace MagicDish.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Units", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            UnitName = "Grams"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            UnitName = "Mililiters"
-                        });
+                    b.ToTable("Units");
                 });
 
             modelBuilder.Entity("MagicDish.Core.Models.User", b =>

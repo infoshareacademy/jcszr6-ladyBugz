@@ -1,0 +1,32 @@
+﻿@model MagicDish.Web.ViewModels.FridgeProductViewModel
+
+<form method="post" asp-action="Delete">
+    <input asp-for="ProductName" asp-items="Model.ProductName" hidden />
+    <div>
+        <div class="row pb-2">
+            <h2 class="text-primary">Delete the product below from your fridge</h2>
+        </div>
+        <div asp-validation-summary="All"></div>
+        <div class="m-3">
+            <label asp-for="ProductCategory"></label>
+            <input asp-for="ProductCategory" disabled asp-items="Model.ProductCategory" class="form-control" />
+        </div>
+        <div class="m-3" id="ProductNameDiv">
+            <label asp-for="ProductName"></label>
+            <input asp-for="ProductName" disabled asp-items="Model.ProductName" class="form-control" />
+        </div>
+        <div class="m-3" id="AmountDiv">
+            <label asp-for="Amount"></label>
+            <input asp-for="Amount" disabled class="form-control" />
+        </div>
+        <div class="m-3" id="UnitDiv">
+            <label asp-for="Unit"></label>
+            <input asp-for="Unit" disabled asp-items="Model.Unit" class="form-control" />
+        </div>
+        <br />
+        <button type="submit" class="btn btn-danger" style="width:200px">Delete</button>
+        <a asp-controller="FridgeContent" asp-action="Index" class="btn btn-secondary" style="width:200px">
+            Back to your fridge
+        </a>
+    </div>
+</form>

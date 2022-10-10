@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using MagicDish.Persistance.Data;
 
 namespace MagicDish.Web.Areas.Identity.Pages.Account
 {
@@ -30,13 +31,15 @@ namespace MagicDish.Web.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<User> _emailStore;
         private readonly ILogger<User> _logger;
         private readonly IEmailSender _emailSender;
+		private readonly ApplicationDbContext _context;
 
-        public RegisterModel(
+		public RegisterModel(
             UserManager<User> userManager,
             IUserStore<User> userStore,
             SignInManager<User> signInManager,
             ILogger<User> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+			ApplicationDbContext dbContext)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,6 +47,7 @@ namespace MagicDish.Web.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = dbContext;
         }
 
         /// <summary>
@@ -123,6 +127,9 @@ namespace MagicDish.Web.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
+
+                    CreateFridgeForUser(userId);
+
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
@@ -152,6 +159,16 @@ namespace MagicDish.Web.Areas.Identity.Pages.Account
 
             // If we got this far, something failed, redisplay form
             return Page();
+        }
+
+        private void CreateFridgeForUser(string userId)
+        {
+            var newFridge = new Fridge();
+
+            newFridge.UserId = userId;
+
+            _context.Fridges.Add(newFridge);
+            _context.SaveChanges();
         }
 
         private User CreateUser()
