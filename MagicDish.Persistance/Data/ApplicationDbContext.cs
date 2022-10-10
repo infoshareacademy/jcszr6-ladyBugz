@@ -157,7 +157,7 @@ namespace MagicDish.Persistance.Data
 					{
 						Id = 10,
 						Name = "Olive oil",
-						UnitId = 1,
+						UnitId = 2,
 						ProductCategoryId = 5
 					},
                     new Product

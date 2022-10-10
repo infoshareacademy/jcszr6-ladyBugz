@@ -5,63 +5,78 @@
 
 <h1>Welcome to your fridge!</h1>
 
-<div class="row pt-4">
-    <div class="col-6">
-        <h2>Products available in your fridge</h2>
+@if (Model.Count > 0)
+{
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2>Products available in your fridge</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="FridgeContent" asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-square"></i> &nbsp; Add new product</a>
+        </div>
     </div>
-    <div class="col-6 text-end">
-        <a asp-controller="FridgeContent" asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-square"></i> &nbsp; Add new product</a>
-    </div>
-</div>
 
-<table class="table table-bordered table-striped" style="width:100%">
-    <thead>
-        <tr>
-            <th>
-                Food Category
-            </th>
-            <th>
-                Product
-            </th>
-            <th>
-                Amount
-            </th>
-            <th>
-                Unit of measure
-            </th>
-            <th>
-                Is vegan?
-            </th>
-            <th>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var prod in Model)
-        {
+    <table class="table table-bordered table-striped" style="width:100%">
+        <thead>
             <tr>
-                <td width="18%">
-                    @prod.ProductCategory
-                </td>
-                <td width="18%">
-                    @prod.ProductName
-                </td>
-                <td width="18%">
-                    @prod.Amount
-                    <div class="w-75 btn-group" role="group">
-                        <a asp-controller="FridgeContent" asp-action="Edit" asp-route-Id="@prod.Id"><i class="bi bi-pencil-square"></i> Edit</a>
-                    </div>
-                </td>
-                <td width="18%">
-                    @prod.Unit
-                </td>
-                <td width="18%">
-                    @prod.IsVegan
-                </td>
-                <td width="10%">
-                    <a asp-controller="FridgeContent" asp-action="Delete" asp-route-Id="@prod.Id"><i class="bi bi-trash"></i> Delete</a>
-                </td>
+                <th>
+                    Food Category
+                </th>
+                <th>
+                    Product
+                </th>
+                <th>
+                    Amount
+                </th>
+                <th>
+                    Unit of measure
+                </th>
+                <th>
+                    Is vegan?
+                </th>
+                <th>
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var prod in Model)
+            {
+                <tr>
+                    <td width="18%">
+                        @prod.ProductCategory
+                    </td>
+                    <td width="18%">
+                        @prod.ProductName
+                    </td>
+                    <td width="18%">
+                        @prod.Amount
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-controller="FridgeContent" asp-action="Edit" asp-route-Id="@prod.Id"><i class="bi bi-pencil-square"></i> Edit</a>
+                        </div>
+                    </td>
+                    <td width="18%">
+                        @prod.Unit
+                    </td>
+                    <td width="18%">
+                        @prod.IsVegan
+                    </td>
+                    <td width="10%">
+                        <a asp-controller="FridgeContent" asp-action="Delete" asp-route-Id="@prod.Id"><i class="bi bi-trash"></i> Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="row pt-4">
+        <div class="col-6">
+            <h4>Your fridge is empty</h4>
+            <h4>Add first product to the fridge</h4>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="FridgeContent" asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-square"></i> &nbsp; Add new product</a>
+        </div>
+    </div>
+}
