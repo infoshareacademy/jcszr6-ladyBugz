@@ -5,20 +5,20 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MagicDish.Persistance.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<User>
-    {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
-        }
+	public class ApplicationDbContext : IdentityDbContext<User>
+	{
+		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+			: base(options)
+		{
+		}
 
-        public DbSet<Fridge> Fridges { get; set; }
-        public DbSet<FridgeProduct> FridgeProducts { get; set; }
-        public DbSet<Product> AvailableProducts { get; set; }
-        public DbSet<ProductCategory> ProductCategories { get; set; }
-        public DbSet<Unit> Units { get; set; }
-        public DbSet<Recipe> Recipes { get; set; }
-        public DbSet<Ingridient> Ingridients { get; set; }
+		public DbSet<Fridge> Fridges { get; set; }
+		public DbSet<FridgeProduct> FridgeProducts { get; set; }
+		public DbSet<Product> AvailableProducts { get; set; }
+		public DbSet<ProductCategory> ProductCategories { get; set; }
+		public DbSet<Unit> Units { get; set; }
+		public DbSet<Recipe> Recipes { get; set; }
+		public DbSet<Ingridient> Ingridients { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
@@ -54,21 +54,21 @@ namespace MagicDish.Persistance.Data
 						CategoryName = "Dairy"
 					},
 					new ProductCategory
-					{ 
+					{
 						Id = 4,
 						CategoryName = "Starch"
 					},
-                    new ProductCategory
-                    {
+					new ProductCategory
+					{
 						Id = 5,
 						CategoryName = "Fat"
-                    },
+					},
 					new ProductCategory
 					{
 						Id = 6,
 						CategoryName = "Spices"
 					}
-                );
+				);
 		}
 
 		private void CreateProduct(ModelBuilder modelBuilder)
@@ -160,28 +160,28 @@ namespace MagicDish.Persistance.Data
 						UnitId = 2,
 						ProductCategoryId = 5
 					},
-                    new Product
-                    {
-                        Id = 11,
-                        Name = "Butter",
-                        UnitId = 1,
-                        ProductCategoryId = 5
-                    },
-                    new Product
-                    {
-                        Id = 12,
-                        Name = "Salt",
-                        UnitId = 1,
-                        ProductCategoryId = 6
-                    },
-                    new Product
-                    {
-                        Id = 13,
-                        Name = "Pepper",
-                        UnitId = 1,
-                        ProductCategoryId = 6
-                    }
-                ); 
+					new Product
+					{
+						Id = 11,
+						Name = "Butter",
+						UnitId = 1,
+						ProductCategoryId = 5
+					},
+					new Product
+					{
+						Id = 12,
+						Name = "Salt",
+						UnitId = 1,
+						ProductCategoryId = 6
+					},
+					new Product
+					{
+						Id = 13,
+						Name = "Pepper",
+						UnitId = 1,
+						ProductCategoryId = 6
+					}
+				);
 		}
 
 		private void CreateUnit(ModelBuilder modelBuilder)
@@ -204,6 +204,101 @@ namespace MagicDish.Persistance.Data
 						UnitName = "Mililiters"
 					}
 				);
+		}
+
+		private void CreateRecipe(ModelBuilder modelBuilder)
+		{
+			modelBuilder.Entity<Recipe>()
+				.ToTable("Recipes");
+
+			modelBuilder.Entity<Recipe>()
+				.Property(r => r.Name)
+				.IsRequired(true);
+
+			modelBuilder.Entity<Recipe>()
+				.HasMany(r => r.Ingredients)
+				.WithOne()
+				.IsRequired(true);
+
+
+			modelBuilder.Entity<Recipe>()
+				.Property(r => r.RecipeExternalLink)
+				.IsRequired(true);
+
+			modelBuilder.Entity<Recipe>()
+				.HasData(
+					new Recipe
+					{
+						Id = 1,
+						Name = "Spaghetti",
+						Ingredients = new List<Ingridient>()
+						{
+							new Ingridient()
+							{
+								ProductId = 1,
+								RecipeId = 1,
+							},
+							new Ingridient()
+							{
+								ProductId = 9,
+								RecipeId = 1,
+							},
+							new Ingridient()
+							{
+								ProductId = 10,
+								RecipeId = 1,
+							}
+						},
+						RecipeExternalLink = "https://www.bbcgoodfood.com/recipes/best-spaghetti-bolognese-recipe"
+					},
+					new Recipe
+					{
+						Id = 2,
+						Name = "Mac n cheese",
+						Ingredients = new List<Ingridient>()
+						{
+							new Ingridient()
+							{
+								ProductId = 6,
+								RecipeId = 2,
+							},
+							new Ingridient()
+							{
+								ProductId = 7,
+								RecipeId = 2,
+							},
+							new Ingridient()
+							{
+								ProductId = 9,
+								RecipeId = 2,
+							}
+						},
+						RecipeExternalLink = "https://tasty.co/recipe/3-ingredient-mac-cheese"
+					},
+					new Recipe
+					{
+						Id = 3,
+						Name = "Apple Pie",
+						Ingredients = new List<Ingridient>()
+						{
+							new Ingridient()
+							{
+								ProductId = 4,
+								RecipeId = 3,
+							},
+							new Ingridient()
+							{
+								ProductId = 8,
+								RecipeId = 3,
+							},
+							new Ingridient()
+							{
+								ProductId = 5,
+								RecipeId = 3,
+							}
+						},
+						RecipeExternalLink = "https://tasty.co/recipe/apple-pie-from-scratch"
+					});
 		}
 	}
 }

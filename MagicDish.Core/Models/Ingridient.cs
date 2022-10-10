@@ -10,11 +10,13 @@ namespace MagicDish.Core.Models
 
         public int Quantity { get; set; }
 
+        [Required]
         public int RecipeId { get; set; }
 
         [ForeignKey("RecipeId")]
         Recipe Recipe { get; set; }
-        
+
+        [Required]
         public int ProductId { get; set; }
 
         [ForeignKey("ProductId")]
