@@ -18,7 +18,7 @@ namespace MagicDish.Persistance.Data
 		public DbSet<ProductCategory> ProductCategories { get; set; }
 		public DbSet<Unit> Units { get; set; }
 		public DbSet<Recipe> Recipes { get; set; }
-		public DbSet<Ingridient> Ingridients { get; set; }
+		public DbSet<Ingredient> Ingridients { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
@@ -231,19 +231,19 @@ namespace MagicDish.Persistance.Data
 					{
 						Id = 1,
 						Name = "Spaghetti",
-						Ingredients = new List<Ingridient>()
+						Ingredients = new List<Ingredient>()
 						{
-							new Ingridient()
+							new Ingredient()
 							{
 								ProductId = 1,
 								RecipeId = 1,
 							},
-							new Ingridient()
+							new Ingredient()
 							{
 								ProductId = 9,
 								RecipeId = 1,
 							},
-							new Ingridient()
+							new Ingredient()
 							{
 								ProductId = 10,
 								RecipeId = 1,
@@ -255,19 +255,19 @@ namespace MagicDish.Persistance.Data
 					{
 						Id = 2,
 						Name = "Mac n cheese",
-						Ingredients = new List<Ingridient>()
+						Ingredients = new List<Ingredient>()
 						{
-							new Ingridient()
+							new Ingredient()
 							{
 								ProductId = 6,
 								RecipeId = 2,
 							},
-							new Ingridient()
+							new Ingredient()
 							{
 								ProductId = 7,
 								RecipeId = 2,
 							},
-							new Ingridient()
+							new Ingredient()
 							{
 								ProductId = 9,
 								RecipeId = 2,
@@ -279,19 +279,19 @@ namespace MagicDish.Persistance.Data
 					{
 						Id = 3,
 						Name = "Apple Pie",
-						Ingredients = new List<Ingridient>()
+						Ingredients = new List<Ingredient>()
 						{
-							new Ingridient()
+							new Ingredient()
 							{
 								ProductId = 4,
 								RecipeId = 3,
 							},
-							new Ingridient()
+							new Ingredient()
 							{
 								ProductId = 8,
 								RecipeId = 3,
 							},
-							new Ingridient()
+							new Ingredient()
 							{
 								ProductId = 5,
 								RecipeId = 3,

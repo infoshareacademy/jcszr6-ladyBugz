@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MagicDish.Core.Models
 {
-    public class Ingridient
+    public class Ingredient
     {
         [Key]
         public int Id { get; set; }

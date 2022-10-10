@@ -2,12 +2,13 @@
 using MagicDish.Persistance.Data;
 using MagicDish.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
 
 namespace MagicDish.Web.Controllers
 {
-    public class RecipesController
+    public class RecipesController : Controller
     {
         private readonly ApplicationDbContext _context;
         public RecipesController(ApplicationDbContext context)
@@ -17,8 +18,8 @@ namespace MagicDish.Web.Controllers
 
         public IActionResult Index()
         {
-            List<RecipeViewModel> model = new List<RecipeViewModel>();
-            return View(model);
+            var recipes = _context.Recipes.ToList();
+            return View(recipes);
         }
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MagicDish.Persistance.Migrations
 {
-    public partial class Start : Migration
+    public partial class start : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -68,8 +68,7 @@ namespace MagicDish.Persistance.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CookingTimeInMinutes = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    RecipeExternalLink = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -294,6 +293,48 @@ namespace MagicDish.Persistance.Migrations
                         principalTable: "Recipes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "ProductCategories",
+                columns: new[] { "Id", "CategoryName" },
+                values: new object[,]
+                {
+                    { 1, "Vegetable" },
+                    { 2, "Fruit" },
+                    { 3, "Dairy" },
+                    { 4, "Starch" },
+                    { 5, "Fat" },
+                    { 6, "Spices" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Units",
+                columns: new[] { "Id", "UnitName" },
+                values: new object[,]
+                {
+                    { 1, "Grams" },
+                    { 2, "Mililiters" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AvailableProducts",
+                columns: new[] { "Id", "IsVegan", "Name", "ProductCategoryId", "UnitId" },
+                values: new object[,]
+                {
+                    { 1, false, "Tomato", 1, 1 },
+                    { 2, false, "Potato", 1, 1 },
+                    { 3, false, "Carrot", 1, 1 },
+                    { 4, false, "Apple", 2, 1 },
+                    { 5, false, "Lemon", 2, 1 },
+                    { 6, false, "Cheese", 3, 1 },
+                    { 7, false, "Milk", 3, 2 },
+                    { 8, false, "Flour", 4, 1 },
+                    { 9, false, "Pasta", 4, 1 },
+                    { 10, false, "Olive oil", 5, 2 },
+                    { 11, false, "Butter", 5, 1 },
+                    { 12, false, "Salt", 6, 1 },
+                    { 13, false, "Pepper", 6, 1 }
                 });
 
             migrationBuilder.CreateIndex(

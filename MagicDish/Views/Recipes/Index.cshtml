@@ -1,5 +1,5 @@
 ﻿@using MagicDish.Web.ViewModels
-@model List<RecipeViewModel>
+@model List<Recipe>
 
 
 @{
@@ -32,7 +32,7 @@
                 </td>
                 <td width="18%">
                     //tutaj maja sie znalezc tylko ingridients, ktore istnieja w lodowce
-                    @prod.CommonIngridients
+                    @prod.Ingredients.ToList();
                 </td>
                 <td width="18%">
                     @prod.RecipeExternalLink
