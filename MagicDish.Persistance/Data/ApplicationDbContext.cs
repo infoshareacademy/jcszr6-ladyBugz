@@ -210,21 +210,16 @@ namespace MagicDish.Persistance.Data
 		{
 			modelBuilder.Entity<Recipe>()
 				.ToTable("Recipes");
-
 			modelBuilder.Entity<Recipe>()
 				.Property(r => r.Name)
 				.IsRequired(true);
-
 			modelBuilder.Entity<Recipe>()
 				.HasMany(r => r.Ingredients)
 				.WithOne()
 				.IsRequired(true);
-
-
 			modelBuilder.Entity<Recipe>()
 				.Property(r => r.RecipeExternalLink)
 				.IsRequired(true);
-
 			modelBuilder.Entity<Recipe>()
 				.HasData(
 					new Recipe
