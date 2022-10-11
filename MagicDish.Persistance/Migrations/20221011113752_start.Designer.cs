@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MagicDish.Persistance.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221010211336_start")]
+    [Migration("20221011113752_start")]
     partial class start
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -92,7 +92,72 @@ namespace MagicDish.Persistance.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("Ingridients");
+                    b.ToTable("Ingredients", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ProductId = 1,
+                            Quantity = 0,
+                            RecipeId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ProductId = 9,
+                            Quantity = 0,
+                            RecipeId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ProductId = 10,
+                            Quantity = 0,
+                            RecipeId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ProductId = 6,
+                            Quantity = 0,
+                            RecipeId = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ProductId = 7,
+                            Quantity = 0,
+                            RecipeId = 2
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ProductId = 9,
+                            Quantity = 0,
+                            RecipeId = 2
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ProductId = 4,
+                            Quantity = 0,
+                            RecipeId = 3
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ProductId = 8,
+                            Quantity = 0,
+                            RecipeId = 3
+                        },
+                        new
+                        {
+                            Id = 9,
+                            ProductId = 5,
+                            Quantity = 0,
+                            RecipeId = 3
+                        });
                 });
 
             modelBuilder.Entity("MagicDish.Core.Models.Product", b =>
@@ -298,7 +363,27 @@ namespace MagicDish.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Recipes");
+                    b.ToTable("Recipes", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Spaghetti",
+                            RecipeExternalLink = "https://www.bbcgoodfood.com/recipes/best-spaghetti-bolognese-recipe"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Mac n cheese",
+                            RecipeExternalLink = "https://tasty.co/recipe/3-ingredient-mac-cheese"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Apple Pie",
+                            RecipeExternalLink = "https://tasty.co/recipe/apple-pie-from-scratch"
+                        });
                 });
 
             modelBuilder.Entity("MagicDish.Core.Models.Unit", b =>

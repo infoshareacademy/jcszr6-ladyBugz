@@ -269,7 +269,7 @@ namespace MagicDish.Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Ingridients",
+                name: "Ingredients",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -280,15 +280,15 @@ namespace MagicDish.Persistance.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ingridients", x => x.Id);
+                    table.PrimaryKey("PK_Ingredients", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Ingridients_AvailableProducts_ProductId",
+                        name: "FK_Ingredients_AvailableProducts_ProductId",
                         column: x => x.ProductId,
                         principalTable: "AvailableProducts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Ingridients_Recipes_RecipeId",
+                        name: "FK_Ingredients_Recipes_RecipeId",
                         column: x => x.RecipeId,
                         principalTable: "Recipes",
                         principalColumn: "Id",
@@ -306,6 +306,16 @@ namespace MagicDish.Persistance.Migrations
                     { 4, "Starch" },
                     { 5, "Fat" },
                     { 6, "Spices" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Recipes",
+                columns: new[] { "Id", "Name", "RecipeExternalLink" },
+                values: new object[,]
+                {
+                    { 1, "Spaghetti", "https://www.bbcgoodfood.com/recipes/best-spaghetti-bolognese-recipe" },
+                    { 2, "Mac n cheese", "https://tasty.co/recipe/3-ingredient-mac-cheese" },
+                    { 3, "Apple Pie", "https://tasty.co/recipe/apple-pie-from-scratch" }
                 });
 
             migrationBuilder.InsertData(
@@ -335,6 +345,22 @@ namespace MagicDish.Persistance.Migrations
                     { 11, false, "Butter", 5, 1 },
                     { 12, false, "Salt", 6, 1 },
                     { 13, false, "Pepper", 6, 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Ingredients",
+                columns: new[] { "Id", "ProductId", "Quantity", "RecipeId" },
+                values: new object[,]
+                {
+                    { 1, 1, 0, 1 },
+                    { 2, 9, 0, 1 },
+                    { 3, 10, 0, 1 },
+                    { 4, 6, 0, 2 },
+                    { 5, 7, 0, 2 },
+                    { 6, 9, 0, 2 },
+                    { 7, 4, 0, 3 },
+                    { 8, 8, 0, 3 },
+                    { 9, 5, 0, 3 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -402,13 +428,13 @@ namespace MagicDish.Persistance.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ingridients_ProductId",
-                table: "Ingridients",
+                name: "IX_Ingredients_ProductId",
+                table: "Ingredients",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ingridients_RecipeId",
-                table: "Ingridients",
+                name: "IX_Ingredients_RecipeId",
+                table: "Ingredients",
                 column: "RecipeId");
         }
 
@@ -433,7 +459,7 @@ namespace MagicDish.Persistance.Migrations
                 name: "FridgeProducts");
 
             migrationBuilder.DropTable(
-                name: "Ingridients");
+                name: "Ingredients");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

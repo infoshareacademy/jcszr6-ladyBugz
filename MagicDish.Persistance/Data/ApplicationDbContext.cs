@@ -27,9 +27,11 @@ namespace MagicDish.Persistance.Data
 			CreateProductCategories(modelBuilder);
 			CreateUnit(modelBuilder);
 			CreateProduct(modelBuilder);
+            CreateIngridient(modelBuilder);
+            CreateRecipe(modelBuilder);
 		}
 
-		private void CreateProductCategories(ModelBuilder modelBuilder)
+        private void CreateProductCategories(ModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<ProductCategory>()
 				.ToTable("ProductCategories");
@@ -206,7 +208,70 @@ namespace MagicDish.Persistance.Data
 				);
 		}
 
-		private void CreateRecipe(ModelBuilder modelBuilder)
+		private void CreateIngridient(ModelBuilder modelBuilder)
+		{
+			modelBuilder.Entity<Ingredient>()
+				.ToTable("Ingredients");
+			modelBuilder.Entity<Ingredient>()
+				.HasData(
+				new Ingredient()
+				{
+                    Id = 1,
+                    ProductId = 1,
+					RecipeId = 1,
+				},
+				new Ingredient()
+				{
+                    Id = 2,
+                    ProductId = 9,
+					RecipeId = 1,
+				},
+				new Ingredient()
+				{
+                    Id = 3,
+                    ProductId = 10,
+					RecipeId = 1,
+				},
+				new Ingredient()
+				{
+                    Id = 4,
+                    ProductId = 6,
+					RecipeId = 2,
+				},
+				new Ingredient()
+				{
+                    Id = 5,
+                    ProductId = 7,
+					RecipeId = 2,
+				},
+				new Ingredient()
+				{
+                    Id = 6,
+                    ProductId = 9,
+					RecipeId = 2,
+				},
+				new Ingredient()
+				{
+                    Id = 7,
+                    ProductId = 4,
+					RecipeId = 3,
+				},
+				new Ingredient()
+				{
+                    Id = 8,
+                    ProductId = 8,
+					RecipeId = 3,
+				},
+				new Ingredient()
+				{
+                    Id = 9,
+                    ProductId = 5,
+					RecipeId = 3,
+				}
+			);
+        }
+
+        private void CreateRecipe(ModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<Recipe>()
 				.ToTable("Recipes");
@@ -226,72 +291,72 @@ namespace MagicDish.Persistance.Data
 					{
 						Id = 1,
 						Name = "Spaghetti",
-						Ingredients = new List<Ingredient>()
-						{
-							new Ingredient()
-							{
-								ProductId = 1,
-								RecipeId = 1,
-							},
-							new Ingredient()
-							{
-								ProductId = 9,
-								RecipeId = 1,
-							},
-							new Ingredient()
-							{
-								ProductId = 10,
-								RecipeId = 1,
-							}
-						},
+						//Ingredients = new List<Ingredient>()
+						//{
+						//	new Ingredient()
+						//	{
+						//		ProductId = 1,
+						//		RecipeId = 1,
+						//	},
+						//	new Ingredient()
+						//	{
+						//		ProductId = 9,
+						//		RecipeId = 1,
+						//	},
+						//	new Ingredient()
+						//	{
+						//		ProductId = 10,
+						//		RecipeId = 1,
+						//	}
+						//},
 						RecipeExternalLink = "https://www.bbcgoodfood.com/recipes/best-spaghetti-bolognese-recipe"
 					},
 					new Recipe
 					{
 						Id = 2,
 						Name = "Mac n cheese",
-						Ingredients = new List<Ingredient>()
-						{
-							new Ingredient()
-							{
-								ProductId = 6,
-								RecipeId = 2,
-							},
-							new Ingredient()
-							{
-								ProductId = 7,
-								RecipeId = 2,
-							},
-							new Ingredient()
-							{
-								ProductId = 9,
-								RecipeId = 2,
-							}
-						},
+						//Ingredients = new List<Ingredient>()
+						//{
+						//	new Ingredient()
+						//	{
+						//		ProductId = 6,
+						//		RecipeId = 2,
+						//	},
+						//	new Ingredient()
+						//	{
+						//		ProductId = 7,
+						//		RecipeId = 2,
+						//	},
+						//	new Ingredient()
+						//	{
+						//		ProductId = 9,
+						//		RecipeId = 2,
+						//	}
+						//},
 						RecipeExternalLink = "https://tasty.co/recipe/3-ingredient-mac-cheese"
 					},
 					new Recipe
 					{
 						Id = 3,
 						Name = "Apple Pie",
-						Ingredients = new List<Ingredient>()
-						{
-							new Ingredient()
-							{
-								ProductId = 4,
-								RecipeId = 3,
-							},
-							new Ingredient()
-							{
-								ProductId = 8,
-								RecipeId = 3,
-							},
-							new Ingredient()
-							{
-								ProductId = 5,
-								RecipeId = 3,
-							}
-						},
+						//Ingredients = new List<Ingredient>()
+						//{
+						//	new Ingredient()
+						//	{
+						//		ProductId = 4,
+						//		RecipeId = 3,
+						//	},
+						//	new Ingredient()
+						//	{
+						//		ProductId = 8,
+						//		RecipeId = 3,
+						//	},
+						//	new Ingredient()
+						//	{
+						//		ProductId = 5,
+						//		RecipeId = 3,
+						//	}
+						//},
 						RecipeExternalLink = "https://tasty.co/recipe/apple-pie-from-scratch"
 					});
 		}
