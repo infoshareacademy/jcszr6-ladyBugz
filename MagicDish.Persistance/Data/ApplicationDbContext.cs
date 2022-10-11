@@ -291,72 +291,72 @@ namespace MagicDish.Persistance.Data
 					{
 						Id = 1,
 						Name = "Spaghetti",
-						//Ingredients = new List<Ingredient>()
-						//{
-						//	new Ingredient()
-						//	{
-						//		ProductId = 1,
-						//		RecipeId = 1,
-						//	},
-						//	new Ingredient()
-						//	{
-						//		ProductId = 9,
-						//		RecipeId = 1,
-						//	},
-						//	new Ingredient()
-						//	{
-						//		ProductId = 10,
-						//		RecipeId = 1,
-						//	}
-						//},
+						Ingredients = new List<Ingredient>()
+						{
+							//new Ingredient()
+							//{
+							//	ProductId = 1,
+							//	RecipeId = 1,
+							//},
+							//new Ingredient()
+							//{
+							//	ProductId = 9,
+							//	RecipeId = 1,
+							//},
+							//new Ingredient()
+							//{
+							//	ProductId = 10,
+							//	RecipeId = 1,
+							//}
+						},
 						RecipeExternalLink = "https://www.bbcgoodfood.com/recipes/best-spaghetti-bolognese-recipe"
 					},
 					new Recipe
 					{
 						Id = 2,
 						Name = "Mac n cheese",
-						//Ingredients = new List<Ingredient>()
-						//{
-						//	new Ingredient()
-						//	{
-						//		ProductId = 6,
-						//		RecipeId = 2,
-						//	},
-						//	new Ingredient()
-						//	{
-						//		ProductId = 7,
-						//		RecipeId = 2,
-						//	},
-						//	new Ingredient()
-						//	{
-						//		ProductId = 9,
-						//		RecipeId = 2,
-						//	}
-						//},
+						Ingredients = new List<Ingredient>()
+						{
+							//new Ingredient()
+							//{
+							//	ProductId = 6,
+							//	RecipeId = 2,
+							//},
+							//new Ingredient()
+							//{
+							//	ProductId = 7,
+							//	RecipeId = 2,
+							//},
+							//new Ingredient()
+							//{
+							//	ProductId = 9,
+							//	RecipeId = 2,
+							//}
+						},
 						RecipeExternalLink = "https://tasty.co/recipe/3-ingredient-mac-cheese"
 					},
 					new Recipe
 					{
 						Id = 3,
 						Name = "Apple Pie",
-						//Ingredients = new List<Ingredient>()
-						//{
-						//	new Ingredient()
-						//	{
-						//		ProductId = 4,
-						//		RecipeId = 3,
-						//	},
-						//	new Ingredient()
-						//	{
-						//		ProductId = 8,
-						//		RecipeId = 3,
-						//	},
-						//	new Ingredient()
-						//	{
-						//		ProductId = 5,
-						//		RecipeId = 3,
-						//	}
-						//},
+						Ingredients = new List<Ingredient>()
+						{
+							//new Ingredient()
+							//{
+							//	ProductId = 4,
+							//	RecipeId = 3,
+							//},
+							//new Ingredient()
+							//{
+							//	ProductId = 8,
+							//	RecipeId = 3,
+							//},
+							//new Ingredient()
+							//{
+							//	ProductId = 5,
+							//	RecipeId = 3,
+							//}
+						},
 						RecipeExternalLink = "https://tasty.co/recipe/apple-pie-from-scratch"
 					});
 		}

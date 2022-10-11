@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MagicDish.Persistance.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221011113752_start")]
+    [Migration("20221011115429_start")]
     partial class start
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

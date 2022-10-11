@@ -18,7 +18,7 @@ namespace MagicDish.Web.Controllers
 
         public IActionResult Index()
         {
-            var recipes = _context.Recipes.ToList();
+            List<Recipe> recipes = _context.Recipes.ToList();
             return View(recipes);
         }
     }
