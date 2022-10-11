@@ -18,13 +18,13 @@ namespace MagicDish.Persistance.Data
 		public DbSet<ProductCategory> ProductCategories { get; set; }
 		public DbSet<Unit> Units { get; set; }
 		public DbSet<Recipe> Recipes { get; set; }
-		public DbSet<Ingredient> Ingridients { get; set; }
+		public DbSet<Ingredient> Ingredients { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
 
-			CreateProductCategories(modelBuilder);
+            CreateProductCategories(modelBuilder);
 			CreateUnit(modelBuilder);
 			CreateProduct(modelBuilder);
             CreateIngridient(modelBuilder);
@@ -275,7 +275,7 @@ namespace MagicDish.Persistance.Data
 		{
 			modelBuilder.Entity<Recipe>()
 				.ToTable("Recipes");
-			modelBuilder.Entity<Recipe>()
+            modelBuilder.Entity<Recipe>()
 				.Property(r => r.Name)
 				.IsRequired(true);
 			modelBuilder.Entity<Recipe>()

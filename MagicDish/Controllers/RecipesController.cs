@@ -4,7 +4,7 @@ using MagicDish.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace MagicDish.Web.Controllers
 {
@@ -18,7 +18,7 @@ namespace MagicDish.Web.Controllers
 
         public IActionResult Index()
         {
-            List<Recipe> recipes = _context.Recipes.ToList();
+            List<Recipe> recipes = _context.Recipes.Include(r => r.Ingredients).ToList();
             return View(recipes);
         }
     }
