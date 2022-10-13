@@ -67,7 +67,7 @@ namespace MagicDish.Persistance.Migrations
                     b.ToTable("FridgeProducts");
                 });
 
-            modelBuilder.Entity("MagicDish.Core.Models.Ingridient", b =>
+            modelBuilder.Entity("MagicDish.Core.Models.Ingredient", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -90,7 +90,7 @@ namespace MagicDish.Persistance.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("Ingridients");
+                    b.ToTable("Ingredients");
                 });
 
             modelBuilder.Entity("MagicDish.Core.Models.Product", b =>
@@ -201,7 +201,7 @@ namespace MagicDish.Persistance.Migrations
                             IsVegan = false,
                             Name = "Olive oil",
                             ProductCategoryId = 5,
-                            UnitId = 1
+                            UnitId = 2
                         },
                         new
                         {
@@ -286,14 +286,11 @@ namespace MagicDish.Persistance.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CookingTimeInMinutes")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("RecipeExternalLink")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -563,7 +560,7 @@ namespace MagicDish.Persistance.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("MagicDish.Core.Models.Ingridient", b =>
+            modelBuilder.Entity("MagicDish.Core.Models.Ingredient", b =>
                 {
                     b.HasOne("MagicDish.Core.Models.Product", "Product")
                         .WithMany()
