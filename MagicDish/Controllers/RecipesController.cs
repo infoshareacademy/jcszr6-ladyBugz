@@ -5,6 +5,7 @@ using MagicDish.Persistance.Data;
 using MagicDish.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using NuGet.Packaging.Signing;
 
 namespace MagicDish.Web.Controllers
 {
@@ -119,7 +120,8 @@ namespace MagicDish.Web.Controllers
                 var body = await response.Content.ReadAsStringAsync();
 
                 var result = JsonConvert.DeserializeObject<ApiGetInfoResponse>(body);
-                List<String> ingredients = result.Sections.Where(c => c.Components is not null).Select(c => c.Components.Where(i => i.Ingredient is not null).FirstOrDefault().Ingredient.ToString()).ToList();
+                //List<String> ingredients = result.Sections.Where(c => c.Components is not null).Select(c => c.Components.Where(i => i.Ingredient is not null).FirstOrDefault().Ingredient?.ToString()).ToList();
+                var ingredients = result.Sections.Where(s => s.Components is not null).Select(c => c.Components.First().Ingredient?.ToString()).ToList();
                 return ingredients;
             }
         }
