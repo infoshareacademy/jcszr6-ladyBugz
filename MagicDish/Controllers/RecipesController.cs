@@ -2,6 +2,7 @@
 using System.Text.Json.Serialization;
 using MagicDish.Core.Models;
 using MagicDish.Persistance.Data;
+using MagicDish.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -40,8 +41,8 @@ namespace MagicDish.Web.Controllers
 
             //List<Recipe> recipesToDisplay = new(filteredRecipes.Select(r => new Recipe() { Id = r.Select(r => r.Id).FirstOrDefault(), Name = r.Select(r => r.Name).FirstOrDefault(), Ingredients = GetAllInredientsForRecipe(r.Select(r => r.Id).FirstOrDefault()), RecipeExternalLink = $"https://tasty.co/recipe/{r.Select(r => r.Url).FirstOrDefault()}" })) ;
 
-            List<Recipe> recipesToDisplay = new(
-                filteredRecipes.Select(r => new Recipe()
+            List<RecipeViewModel> recipesToDisplay = new(
+                filteredRecipes.Select(r => new RecipeViewModel()
                 {
                     Id = r.Select(r => r.Id).FirstOrDefault(),
                     Name = r.Select(r => r.Name).FirstOrDefault(),

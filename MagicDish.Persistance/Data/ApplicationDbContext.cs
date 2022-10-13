@@ -17,7 +17,6 @@ namespace MagicDish.Persistance.Data
 		public DbSet<Product> AvailableProducts { get; set; }
 		public DbSet<ProductCategory> ProductCategories { get; set; }
 		public DbSet<Unit> Units { get; set; }
-		public DbSet<Recipe> Recipes { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
