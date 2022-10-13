@@ -30,21 +30,30 @@ namespace MagicDish.Web.Controllers
 
             var allRecipes = new List<RecipeDto>();
 
-			foreach (var fridgeProduct in fridgeProductResult)
+            foreach (var fridgeProduct in fridgeProductResult)
             {
                 var recipeResponse = await GetAllRecipes(fridgeProduct.ProductName);
                 allRecipes.AddRange(recipeResponse);
-			}
+            }
 
             var filteredRecipes = allRecipes.GroupBy(x => x.Id).OrderByDescending(y => y.Count()).ToList();
 
-            List<Recipe> recipesToDisplay = new (filteredRecipes.Select(r => new Recipe() { Id = r.Select(r => r.Id).FirstOrDefault(), Name = r.Select(r => r.Name).FirstOrDefault(), Ingredients = null, RecipeExternalLink = $"https://tasty.co/recipe/{r.Select(r => r.Url).FirstOrDefault() }" }));
+            List<Recipe> recipesToDisplay = new(filteredRecipes.Select(r => new Recipe() { Id = r.Select(r => r.Id).FirstOrDefault(), Name = r.Select(r => r.Name).FirstOrDefault(), Ingredients = GetAllInredientsForRecipe(r.Select(r => r.Id).FirstOrDefault()), RecipeExternalLink = $"https://tasty.co/recipe/{r.Select(r => r.Url).FirstOrDefault()}" })) ;
 
             return View(recipesToDisplay);
         }
 
-		[JsonObject(MemberSerialization.OptIn)]
-		public class RecipeDto
+        public class ApiGetListResponse
+        {
+            [JsonPropertyName("count")]
+            public int Count { get; set; }
+
+            [JsonPropertyName("results")]
+            public List<RecipeDto> Results { get; set; }
+        }
+
+        [JsonObject(MemberSerialization.OptIn)]
+        public class RecipeDto
         {
             [JsonPropertyAttribute("id")]
             public int Id { get; set; }
@@ -56,16 +65,7 @@ namespace MagicDish.Web.Controllers
             public string Url { get; set; }
         }
 
-        public class ApiResponse 
-        {
-			[JsonPropertyName("count")]
-			public int Count { get; set; }
-
-			[JsonPropertyName("results")]
-			public List<RecipeDto> Results { get; set; }
-		}
-
-		private async Task<List<RecipeDto>> GetAllRecipes(string ingridientName)
+        private async Task<List<RecipeDto>> GetAllRecipes(string ingridientName)
         {
             var client = new HttpClient();
             var request = new HttpRequestMessage
@@ -83,10 +83,54 @@ namespace MagicDish.Web.Controllers
                 response.EnsureSuccessStatusCode();
                 var body = await response.Content.ReadAsStringAsync();
 
-                var result = JsonConvert.DeserializeObject<ApiResponse>(body);
-
+                var result = JsonConvert.DeserializeObject<ApiGetListResponse>(body);
                 return result.Results;
             }
+        }
+
+        private async Task<List<String>> GetAllInredientsForRecipe(int id)
+        {
+            var client = new HttpClient();
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://tasty.p.rapidapi.com/recipes/get-more-info?id={id}"),
+                Headers =
+                {
+                    { "X-RapidAPI-Key", "56f5ad242bmshdd3ef9e7875c7e2p1c7ad4jsnb979b7d20deb" },
+                    { "X-RapidAPI-Host", "tasty.p.rapidapi.com" },
+                },
+            };
+            using (var response = await client.SendAsync(request))
+            {
+                response.EnsureSuccessStatusCode();
+                var body = await response.Content.ReadAsStringAsync();
+
+                var result = JsonConvert.DeserializeObject<ApiGetInfoResponse>(body);
+                var ingredients = result.Sections.Select(c => c.Components.First().Ingredient.ToString()).ToList();
+                return ingredients;
+            }
+        }
+
+        [JsonObject(MemberSerialization.OptIn)]
+        public class ApiGetInfoResponse
+        {
+            [JsonPropertyName("sections")]
+            public List<Section> Sections { get; set; }
+        }
+
+        [JsonObject(MemberSerialization.OptIn)]
+        public class Section
+        {
+            [JsonPropertyName("components")]
+            public List<Component> Components { get; set; }
+        }
+
+        [JsonObject(MemberSerialization.OptIn)]
+        public class Component
+        {
+            [JsonPropertyAttribute("raw-text")]
+            public string Ingredient { get; set; }
         }
     }
 }
