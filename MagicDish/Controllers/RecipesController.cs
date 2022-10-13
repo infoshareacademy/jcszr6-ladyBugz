@@ -118,35 +118,37 @@ namespace MagicDish.Web.Controllers
             {
                 response.EnsureSuccessStatusCode();
                 var body = await response.Content.ReadAsStringAsync();
-
                 var result = JsonConvert.DeserializeObject<ApiGetInfoResponse>(body);
-                //List<String> ingredients = result.Sections.Where(c => c.Components is not null).Select(c => c.Components.Where(i => i.Ingredient is not null).FirstOrDefault().Ingredient?.ToString()).ToList();
-                //wydaje mi sie ze powinno tak byc:
-                //List<String> ingredients = result.Sections.Where(s => s.Components is not null).Select(c => c.Components.Where(i => i.Ingredient is not null)).FirstOrDefault().Select(i => i.Ingredient).ToList();
 
-                var ingredients = result.Sections.Where(s => s.Components is not null).Select(c => c.Components.FirstOrDefault().Ingredient?.ToString()).ToList();
+                List<string> ingredients = new List<string>();
+                foreach (Section section in result.Sections)
+                {
+                    List<string> list = section.Components.Select(i => i.Ingredient).ToList();
+                    ingredients.AddRange(list);
+                }
+
                 return ingredients;
             }
         }
 
-        [JsonObject(MemberSerialization.OptIn)]
+        [JsonObject]
         public class ApiGetInfoResponse
         {
             [JsonPropertyName("sections")]
             public List<Section> Sections { get; set; }
         }
 
-        [JsonObject(MemberSerialization.OptIn)]
+        [JsonObject]
         public class Section
         {
             [JsonPropertyName("components")]
             public List<Component> Components { get; set; }
         }
 
-        [JsonObject(MemberSerialization.OptIn)]
+        [JsonObject]
         public class Component
         {
-            [JsonPropertyAttribute("raw-text")]
+            [JsonPropertyAttribute("raw_text")]
             public string Ingredient { get; set; }
         }
     }
