@@ -119,7 +119,7 @@ namespace MagicDish.Web.Controllers
                 var body = await response.Content.ReadAsStringAsync();
 
                 var result = JsonConvert.DeserializeObject<ApiGetInfoResponse>(body);
-                var ingredients = result.Sections.Where(c => c.Components is not null).Select(c => c.Components.FirstOrDefault().Ingredient?.ToString()).ToList();
+                List<String> ingredients = result.Sections.Where(c => c.Components is not null).Select(c => c.Components.Where(i => i.Ingredient is not null).FirstOrDefault().Ingredient.ToString()).ToList();
                 return ingredients;
             }
         }
