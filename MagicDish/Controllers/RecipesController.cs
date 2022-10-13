@@ -2,10 +2,7 @@
 using System.Text.Json.Serialization;
 using MagicDish.Core.Models;
 using MagicDish.Persistance.Data;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace MagicDish.Web.Controllers
@@ -39,14 +36,11 @@ namespace MagicDish.Web.Controllers
                 allRecipes.AddRange(recipeResponse);
 			}
 
-            var result = allRecipes.GroupBy(x => x.Id).OrderByDescending(y => y.Count()).ToList();
+            var filteredRecipes = allRecipes.GroupBy(x => x.Id).OrderByDescending(y => y.Count()).ToList();
 
-            //help nie potrafie zmapowac List<DtoRecipe> na List<Recipe>, zeby podac jako model do widoku  
-            //(ingrideents musza pozostac null na razie, bo to inna kwestia, zeby je zmatchowac z lodowka)
-            //probowalam w ten sposob:
-            //List<Recipe> recipesToDisplay = result.Select(r => new Recipe() { Id = r.Select(i => i.Id.), Name = r.Select(i => i.Name)
+            List<Recipe> recipesToDisplay = new (filteredRecipes.Select(r => new Recipe() { Id = r.Select(r => r.Id).FirstOrDefault(), Name = r.Select(r => r.Name).FirstOrDefault(), Ingredients = null, RecipeExternalLink = $"https://tasty.co/recipe/{r.Select(r => r.Url).FirstOrDefault() }" }));
 
-            return View();
+            return View(recipesToDisplay);
         }
 
 		[JsonObject(MemberSerialization.OptIn)]
@@ -93,14 +87,6 @@ namespace MagicDish.Web.Controllers
 
                 return result.Results;
             }
-
-            return null;
-        }
-
-        public IActionResult Index2()
-        {
-            List<Recipe> recipes = _context.Recipes.Include(r => r.Ingredients).ToList();
-            return View(recipes);
         }
     }
 }

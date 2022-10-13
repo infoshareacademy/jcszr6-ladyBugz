@@ -12,10 +12,7 @@ namespace MagicDish.Web.ViewModels
         [JsonPropertyName("name")]
         public string Name { get; set; }
 
-
-
         public List<string> ProductName { get; set; }
-
 
         public string RecipeExternalLink { get; set; }
     }
