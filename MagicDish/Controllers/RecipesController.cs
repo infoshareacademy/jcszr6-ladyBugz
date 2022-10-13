@@ -123,7 +123,7 @@ namespace MagicDish.Web.Controllers
                 List<string> ingredients = new List<string>();
                 foreach (Section section in result.Sections)
                 {
-                    List<string> list = section.Components.Select(i => i.Ingredient).ToList();
+                    List<string> list = section.Components.Select(i => i.IngredientData.IngredientName).ToList();
                     ingredients.AddRange(list);
                 }
 
@@ -148,8 +148,15 @@ namespace MagicDish.Web.Controllers
         [JsonObject]
         public class Component
         {
-            [JsonPropertyAttribute("raw_text")]
-            public string Ingredient { get; set; }
+            [JsonPropertyAttribute("ingredient")]
+            public Ingredient IngredientData { get; set; }
+        }
+
+        [JsonObject]
+        public class Ingredient
+        {
+            [JsonPropertyAttribute("name")]
+            public string IngredientName { get; set; }
         }
     }
 }
