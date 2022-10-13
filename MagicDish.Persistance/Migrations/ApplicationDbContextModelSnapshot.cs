@@ -67,32 +67,6 @@ namespace MagicDish.Persistance.Migrations
                     b.ToTable("FridgeProducts");
                 });
 
-            modelBuilder.Entity("MagicDish.Core.Models.Ingridient", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RecipeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("RecipeId");
-
-                    b.ToTable("Ingridients");
-                });
-
             modelBuilder.Entity("MagicDish.Core.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -201,7 +175,7 @@ namespace MagicDish.Persistance.Migrations
                             IsVegan = false,
                             Name = "Olive oil",
                             ProductCategoryId = 5,
-                            UnitId = 1
+                            UnitId = 2
                         },
                         new
                         {
@@ -276,30 +250,6 @@ namespace MagicDish.Persistance.Migrations
                             Id = 6,
                             CategoryName = "Spices"
                         });
-                });
-
-            modelBuilder.Entity("MagicDish.Core.Models.Recipe", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CookingTimeInMinutes")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Recipes");
                 });
 
             modelBuilder.Entity("MagicDish.Core.Models.Unit", b =>
@@ -563,23 +513,6 @@ namespace MagicDish.Persistance.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("MagicDish.Core.Models.Ingridient", b =>
-                {
-                    b.HasOne("MagicDish.Core.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MagicDish.Core.Models.Recipe", null)
-                        .WithMany("Ingredients")
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("MagicDish.Core.Models.Product", b =>
                 {
                     b.HasOne("MagicDish.Core.Models.ProductCategory", "ProductCategory")
@@ -653,11 +586,6 @@ namespace MagicDish.Persistance.Migrations
             modelBuilder.Entity("MagicDish.Core.Models.Fridge", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("MagicDish.Core.Models.Recipe", b =>
-                {
-                    b.Navigation("Ingredients");
                 });
 #pragma warning restore 612, 618
         }

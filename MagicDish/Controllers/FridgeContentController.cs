@@ -4,9 +4,6 @@ using MagicDish.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using System.Runtime.Remoting;
 
 namespace MagicDish.Web.Controllers
 {
@@ -218,7 +215,6 @@ namespace MagicDish.Web.Controllers
 			if (fridgeProduct == null)
             {
                 return NotFound();
-
             }
 
 			_context.FridgeProducts.Remove(fridgeProduct);

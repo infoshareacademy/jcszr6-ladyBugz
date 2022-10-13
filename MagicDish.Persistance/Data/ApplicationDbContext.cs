@@ -5,31 +5,29 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MagicDish.Persistance.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<User>
-    {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
-        }
+	public class ApplicationDbContext : IdentityDbContext<User>
+	{
+		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+			: base(options)
+		{
+		}
 
-        public DbSet<Fridge> Fridges { get; set; }
-        public DbSet<FridgeProduct> FridgeProducts { get; set; }
-        public DbSet<Product> AvailableProducts { get; set; }
-        public DbSet<ProductCategory> ProductCategories { get; set; }
-        public DbSet<Unit> Units { get; set; }
-        public DbSet<Recipe> Recipes { get; set; }
-        public DbSet<Ingridient> Ingridients { get; set; }
+		public DbSet<Fridge> Fridges { get; set; }
+		public DbSet<FridgeProduct> FridgeProducts { get; set; }
+		public DbSet<Product> AvailableProducts { get; set; }
+		public DbSet<ProductCategory> ProductCategories { get; set; }
+		public DbSet<Unit> Units { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
 
-			CreateProductCategories(modelBuilder);
+            CreateProductCategories(modelBuilder);
 			CreateUnit(modelBuilder);
 			CreateProduct(modelBuilder);
 		}
 
-		private void CreateProductCategories(ModelBuilder modelBuilder)
+        private void CreateProductCategories(ModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<ProductCategory>()
 				.ToTable("ProductCategories");
@@ -54,21 +52,21 @@ namespace MagicDish.Persistance.Data
 						CategoryName = "Dairy"
 					},
 					new ProductCategory
-					{ 
+					{
 						Id = 4,
 						CategoryName = "Starch"
 					},
-                    new ProductCategory
-                    {
+					new ProductCategory
+					{
 						Id = 5,
 						CategoryName = "Fat"
-                    },
+					},
 					new ProductCategory
 					{
 						Id = 6,
 						CategoryName = "Spices"
 					}
-                );
+				);
 		}
 
 		private void CreateProduct(ModelBuilder modelBuilder)
@@ -160,28 +158,28 @@ namespace MagicDish.Persistance.Data
 						UnitId = 2,
 						ProductCategoryId = 5
 					},
-                    new Product
-                    {
-                        Id = 11,
-                        Name = "Butter",
-                        UnitId = 1,
-                        ProductCategoryId = 5
-                    },
-                    new Product
-                    {
-                        Id = 12,
-                        Name = "Salt",
-                        UnitId = 1,
-                        ProductCategoryId = 6
-                    },
-                    new Product
-                    {
-                        Id = 13,
-                        Name = "Pepper",
-                        UnitId = 1,
-                        ProductCategoryId = 6
-                    }
-                ); 
+					new Product
+					{
+						Id = 11,
+						Name = "Butter",
+						UnitId = 1,
+						ProductCategoryId = 5
+					},
+					new Product
+					{
+						Id = 12,
+						Name = "Salt",
+						UnitId = 1,
+						ProductCategoryId = 6
+					},
+					new Product
+					{
+						Id = 13,
+						Name = "Pepper",
+						UnitId = 1,
+						ProductCategoryId = 6
+					}
+				);
 		}
 
 		private void CreateUnit(ModelBuilder modelBuilder)
