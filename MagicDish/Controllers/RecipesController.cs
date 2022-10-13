@@ -121,7 +121,7 @@ namespace MagicDish.Web.Controllers
 
                 var result = JsonConvert.DeserializeObject<ApiGetInfoResponse>(body);
                 //List<String> ingredients = result.Sections.Where(c => c.Components is not null).Select(c => c.Components.Where(i => i.Ingredient is not null).FirstOrDefault().Ingredient?.ToString()).ToList();
-                var ingredients = result.Sections.Where(s => s.Components is not null).Select(c => c.Components.First().Ingredient?.ToString()).ToList();
+                var ingredients = result.Sections.Where(s => s.Components is not null).Select(c => c.Components.FirstOrDefault().Ingredient?.ToString()).ToList();
                 return ingredients;
             }
         }
