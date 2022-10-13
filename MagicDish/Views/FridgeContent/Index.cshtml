@@ -1,4 +1,5 @@
 ﻿@model List<MagicDish.Web.ViewModels.FridgeContentViewModel>
+
 @{
     ViewData["Title"] = "Fridge Content";
 }
@@ -67,6 +68,10 @@
             }
         </tbody>
     </table>
+
+    <div class="col-12 text-end">
+        <a asp-controller="Recipes" asp-action="Index" class="btn btn-light">Search for recipes</a>
+    </div>
 }
 else
 {
