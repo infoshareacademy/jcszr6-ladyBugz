@@ -215,7 +215,6 @@ namespace MagicDish.Web.Controllers
 			if (fridgeProduct == null)
             {
                 return NotFound();
-
             }
 
 			_context.FridgeProducts.Remove(fridgeProduct);

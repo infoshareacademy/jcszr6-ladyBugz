@@ -38,7 +38,20 @@ namespace MagicDish.Web.Controllers
 
             var filteredRecipes = allRecipes.GroupBy(x => x.Id).OrderByDescending(y => y.Count()).ToList();
 
-            List<Recipe> recipesToDisplay = new(filteredRecipes.Select(r => new Recipe() { Id = r.Select(r => r.Id).FirstOrDefault(), Name = r.Select(r => r.Name).FirstOrDefault(), Ingredients = GetAllInredientsForRecipe(r.Select(r => r.Id).FirstOrDefault()), RecipeExternalLink = $"https://tasty.co/recipe/{r.Select(r => r.Url).FirstOrDefault()}" })) ;
+            //List<Recipe> recipesToDisplay = new(filteredRecipes.Select(r => new Recipe() { Id = r.Select(r => r.Id).FirstOrDefault(), Name = r.Select(r => r.Name).FirstOrDefault(), Ingredients = GetAllInredientsForRecipe(r.Select(r => r.Id).FirstOrDefault()), RecipeExternalLink = $"https://tasty.co/recipe/{r.Select(r => r.Url).FirstOrDefault()}" })) ;
+
+            List<Recipe> recipesToDisplay = new(
+                filteredRecipes.Select(r => new Recipe()
+                {
+                    Id = r.Select(r => r.Id).FirstOrDefault(),
+                    Name = r.Select(r => r.Name).FirstOrDefault(),
+                    RecipeExternalLink = $"https://tasty.co/recipe/{r.Select(r => r.Url).FirstOrDefault()}"
+                }));
+
+            foreach (var recipe in recipesToDisplay)
+            {
+                recipe.Ingredients = await GetAllInredientsForRecipe(recipe.Id);
+            }
 
             return View(recipesToDisplay);
         }
