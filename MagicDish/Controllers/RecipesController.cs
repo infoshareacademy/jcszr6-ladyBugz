@@ -121,6 +121,9 @@ namespace MagicDish.Web.Controllers
 
                 var result = JsonConvert.DeserializeObject<ApiGetInfoResponse>(body);
                 //List<String> ingredients = result.Sections.Where(c => c.Components is not null).Select(c => c.Components.Where(i => i.Ingredient is not null).FirstOrDefault().Ingredient?.ToString()).ToList();
+                //wydaje mi sie ze powinno tak byc:
+                //List<String> ingredients = result.Sections.Where(s => s.Components is not null).Select(c => c.Components.Where(i => i.Ingredient is not null)).FirstOrDefault().Select(i => i.Ingredient).ToList();
+
                 var ingredients = result.Sections.Where(s => s.Components is not null).Select(c => c.Components.FirstOrDefault().Ingredient?.ToString()).ToList();
                 return ingredients;
             }
