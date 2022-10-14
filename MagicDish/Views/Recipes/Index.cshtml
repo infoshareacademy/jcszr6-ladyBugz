@@ -1,6 +1,6 @@
-﻿@using MagicDish.Web.ViewModels
-@model List<RecipeViewModel>
-
+﻿@using MagicDish.Web.Helper
+@using MagicDish.Web.ViewModels
+@model PaginatedList<RecipeViewModel>
 
 @{
     ViewData["Title"] = "Recipe";
@@ -8,45 +8,71 @@
 
 <h1>Let's browse recipes based on your fridge content!</h1>
 
-
-<table class="table table-bordered table-striped" style="width:100%">
-    <thead>
-        <tr>
-            <th>
-                Recipe Title
-            </th>
-            <th>
-                Products found in the fridge
-            </th>
-            <th>
-                Link to the recipe
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var prod in Model)
-        {
+@if (Model.Count > 0)
+{
+    <table class="table table-bordered table-striped" style="width:100%">
+        <thead>
             <tr>
-                <td width="18%">
-                    @prod.Name
-                </td>
-                <td width="18%">
-                    @prod.Ingredients.ToList();
-                </td>
-                <td width="18%">
-                    @prod.RecipeExternalLink
-                </td>
+                <th>
+                    Recipe Title
+                </th>
+                <th>
+                    Products found in the fridge
+                </th>
+                <th>
+                    Link to the recipe
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var recipe in Model)
+            {
+                <tr>
+                    <td width="20%">
+                        <b>@recipe.Name</b>
+                    </td>
+                    <td>
+                    @foreach (var ingredient in recipe.Ingredients)
+                    {
+                        <p>- @ingredient</p>
+                    }
+                    </td>
+                    <td width="45%">
+                        <p><a href="@recipe.RecipeExternalLink" target="_blank">Link to the recipe</a></p>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
-@*    <div class="row pt-4">
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    <p style="text-align:center;">
+        <a asp-action="Index"
+           asp-route-sortOrder="@ViewData["CurrentSort"]"
+           asp-route-pageNumber="@(Model.PageIndex - 1)"
+           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+           class="btn btn-light @prevDisabled">
+                Previous
+        </a>
+        <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-light @nextDisabled">
+            Next
+        </a>
+    </p>
+}
+else
+{
+    <div class="row pt-4">
         <div class="col-6">
             <h4>Your fridge is empty</h4>
-            <h4>Before searching for recipec you must add at least one product to your fridge</h4>
+            <h4>Before searching for recipe you must add at least one product to your fridge</h4>
         </div>
         <div class="col-6 text-end">
             <a asp-controller="FridgeContent" asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-square"></i> &nbsp; Add new product</a>
         </div>
-    </div>*@
+    </div>
+}

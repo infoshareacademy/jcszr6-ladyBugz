@@ -2,10 +2,11 @@
 using System.Text.Json.Serialization;
 using MagicDish.Core.Models;
 using MagicDish.Persistance.Data;
+using MagicDish.Web.Helper;
 using MagicDish.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using NuGet.Packaging.Signing;
+using System.Data.Entity;
 
 namespace MagicDish.Web.Controllers
 {
@@ -17,7 +18,7 @@ namespace MagicDish.Web.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageNumber)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var products = _context.AvailableProducts;
@@ -48,12 +49,15 @@ namespace MagicDish.Web.Controllers
                     RecipeExternalLink = $"https://tasty.co/recipe/{r.Select(r => r.Url).FirstOrDefault()}"
                 }));
 
-            foreach (var recipe in recipesToDisplay)
+            int pageSize = 3;
+            var paginatedRecipesToDisplay = PaginatedList<RecipeViewModel>.Create(recipesToDisplay, pageNumber ?? 1, pageSize);
+
+            foreach (var recipe in paginatedRecipesToDisplay)
             {
                 recipe.Ingredients = await GetAllInredientsForRecipe(recipe.Id);
             }
 
-            return View(recipesToDisplay);
+            return View(paginatedRecipesToDisplay);
         }
 
         public class ApiGetListResponse
@@ -87,7 +91,7 @@ namespace MagicDish.Web.Controllers
                 RequestUri = new Uri($"https://tasty.p.rapidapi.com/recipes/list?from=0&size=40&q={ingridientName}"),
                 Headers =
                 {
-                    { "X-RapidAPI-Key", "56f5ad242bmshdd3ef9e7875c7e2p1c7ad4jsnb979b7d20deb" },
+                    { "X-RapidAPI-Key", "8a8f4e614cmsha810740f2d29ca6p1fd9c7jsn3c3a258fd3ba" },
                     { "X-RapidAPI-Host", "tasty.p.rapidapi.com" },
                 },
             };
@@ -110,7 +114,7 @@ namespace MagicDish.Web.Controllers
                 RequestUri = new Uri($"https://tasty.p.rapidapi.com/recipes/get-more-info?id={id}"),
                 Headers =
                 {
-                    { "X-RapidAPI-Key", "56f5ad242bmshdd3ef9e7875c7e2p1c7ad4jsnb979b7d20deb" },
+                    { "X-RapidAPI-Key", "8a8f4e614cmsha810740f2d29ca6p1fd9c7jsn3c3a258fd3ba" },
                     { "X-RapidAPI-Host", "tasty.p.rapidapi.com" },
                 },
             };
