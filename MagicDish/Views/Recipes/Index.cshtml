@@ -24,7 +24,7 @@
                     Recipe Title
                 </th>
                 <th>
-                    Products found in the fridge
+                    Ingredients
                 </th>
                 <th>
                     Link to the recipe
@@ -41,7 +41,7 @@
                     <td>
                     @foreach (var ingredient in recipe.Ingredients)
                     {
-                        <p>- @ingredient</p>
+                        <li>@ingredient</li>
                     }
                     </td>
                     <td width="45%">
