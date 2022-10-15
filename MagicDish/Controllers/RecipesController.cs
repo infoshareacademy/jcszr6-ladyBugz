@@ -31,6 +31,8 @@ namespace MagicDish.Web.Controllers
 
             var fridgeProductResult = results.ToList();
 
+            ViewBag.data = fridgeProductResult.Select(p => p.ProductName).ToList();
+
             var allRecipes = new List<RecipeDto>();
 
             foreach (var fridgeProduct in fridgeProductResult)

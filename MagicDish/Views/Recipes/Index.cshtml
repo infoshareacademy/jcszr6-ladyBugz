@@ -10,6 +10,13 @@
 
 @if (Model.Count > 0)
 {
+    <span>Search is based on products from your fridge: </span>
+    @foreach (var product in ViewBag.data)
+    {
+            <b>@product </b>
+    }
+    <hr>
+
     <table class="table table-bordered table-striped" style="width:100%">
         <thead>
             <tr>
@@ -17,7 +24,7 @@
                     Recipe Title
                 </th>
                 <th>
-                    Products found in the fridge
+                    Ingredients
                 </th>
                 <th>
                     Link to the recipe
@@ -34,7 +41,7 @@
                     <td>
                     @foreach (var ingredient in recipe.Ingredients)
                     {
-                        <p>- @ingredient</p>
+                        <li>@ingredient</li>
                     }
                     </td>
                     <td width="45%">
